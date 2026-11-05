@@ -13,3 +13,9 @@ node_modules/
 dist/
 build/
 *.log
+
+# Internal Agent & Confidential Strategy Files (Local Only - Never Push to Public GitHub)
+PLAN.md
+AGENTS.md
+.agents/
+.gemini/
