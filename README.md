@@ -76,7 +76,6 @@ medguard/
 ├── style.css         # VisionOS frosted glass aesthetic, typography, and print styles
 ├── app.js            # Drug engine, lab evaluator, and emergency card generator
 ├── CONTRIBUTING.md   # Clinical data submission guidelines and contribution guide
-├── PLAN.md           # Internal development roadmap and memory log
 ├── LICENSE           # MIT License
 └── .gitignore        # Git ignore rules
 ```
