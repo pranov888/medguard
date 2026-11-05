@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="MedGuard - Open-source personal health safety companion. Check drug interactions, demystify lab results, and generate emergency medical cards with 100% offline privacy.">
+  <meta name="theme-color" content="#0a0f1d">
+  <title>MedGuard - Personal Health Safety & Emergency Companion</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="dark-theme">
+  <!-- Specular Ambient Background Lights -->
+  <div class="ambient-glow glow-1"></div>
+  <div class="ambient-glow glow-2"></div>
+  <div class="ambient-glow glow-3"></div>
+
+  <!-- Main Container -->
+  <div class="app-viewport">
+    <!-- Top Header -->
+    <header class="app-header">
+      <div class="brand-cluster">
+        <div class="brand-emblem">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            <path d="M12 8v8"/>
+            <path d="M8 12h8"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <div class="brand-title">MedGuard</div>
+          <div class="brand-subtitle">Health Safety & Emergency Companion</div>
+        </div>
+      </div>
+
+      <div class="header-controls">
+        <div class="privacy-badge" title="All processing occurs strictly inside your browser. Zero network tracking.">
+          <span class="privacy-dot"></span>
+          <span>100% Local Privacy</span>
+        </div>
+        <button id="themeToggleBtn" class="glass-icon-btn" aria-label="Toggle visual theme" title="Toggle Light/Dark Theme">
+          <svg class="sun-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+          <svg class="moon-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Navigation Bar -->
+    <nav class="nav-segment-bar" role="tablist" aria-label="Primary Navigation">
+      <button class="nav-pill active" id="tab-drugs" role="tab" aria-selected="true" aria-controls="view-drugs">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"/>
+          <path d="m8.5 8.5 7 7"/>
+        </svg>
+        <span>Drug Interactions</span>
+      </button>
+
+      <button class="nav-pill" id="tab-labs" role="tab" aria-selected="false" aria-controls="view-labs">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 2v4a2 2 0 0 0 2 2h4"/>
+          <path d="M16 22H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8l6 6v12a2 2 0 0 1-2 2z"/>
+          <path d="M10 12v6"/>
+          <path d="M14 15v3"/>
+          <path d="M7 16v2"/>
+        </svg>
+        <span>Lab Report Explainer</span>
+      </button>
+
+      <button class="nav-pill" id="tab-emergency" role="tab" aria-selected="false" aria-controls="view-emergency">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="4" width="20" height="16" rx="3"/>
+          <circle cx="8" cy="10" r="2"/>
+          <path d="M14 10h4"/>
+          <path d="M14 14h4"/>
+          <path d="M6 16h4"/>
+        </svg>
+        <span>Emergency Medical Card (ICE)</span>
+      </button>
+    </nav>
+
+    <!-- CONTENT VIEWS -->
+    <main class="main-content">
+      <!-- 1. DRUG INTERACTIONS VIEW -->
+      <section id="view-drugs" class="content-panel active" role="tabpanel" aria-labelledby="tab-drugs">
+        <div class="panel-header-block">
+          <div>
+            <h1 class="section-title">Pairwise Drug Interaction Checker</h1>
+            <p class="section-desc">Add two or more medications, vitamins, or supplements to evaluate dangerous biochemical interactions and contraindicated combinations.</p>
+          </div>
+          <div class="sample-preset-cluster">
+            <span class="preset-label">Quick Scenarios:</span>
+            <button class="preset-chip" data-scenario="cardiac">Heart Health (Warfarin + Aspirin)</button>
+            <button class="preset-chip" data-scenario="critical">Critical Warning (Sildenafil + Nitro)</button>
+            <button class="preset-chip" data-scenario="psych">Serotonin Alert (Sertraline + Tramadol)</button>
+            <button class="preset-chip" data-scenario="metabolic">Metabolic (Metformin + Contrast)</button>
+          </div>
+        </div>
+
+        <div class="layout-grid-2col">
+          <!-- Left Column: Search and Tray -->
+          <div class="glass-card">
+            <div class="card-header">
+              <h2 class="card-title">Active Medication Tray</h2>
+              <button id="clearDrugsBtn" class="text-action-btn" title="Remove all selected drugs">Clear All</button>
+            </div>
+
+            <!-- Drug Selector Input -->
+            <div class="search-combobox">
+              <div class="input-with-icon">
+                <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="11" cy="11" r="8"></circle>
+                  <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+                <input type="text" id="drugSearchInput" class="glass-input" placeholder="Type generic or brand name (e.g. Warfarin, Aspirin, Metformin)..." autocomplete="off">
+              </div>
+              <div id="drugSuggestionsBox" class="suggestions-dropdown hidden"></div>
+            </div>
+
+            <!-- Selected Chips Tray -->
+            <div class="active-meds-container">
+              <div class="tray-label">Selected Medications (<span id="selectedDrugCount">0</span>):</div>
+              <div id="selectedDrugsList" class="med-chips-wrap">
+                <div class="empty-tray-notice">No medications selected yet. Use the search box above or click a quick scenario to begin analysis.</div>
+              </div>
+            </div>
+
+            <!-- Drug Quick Catalog -->
+            <div class="catalog-section">
+              <div class="tray-label">Common Medications (Click to Add):</div>
+              <div id="commonDrugPills" class="common-pills-wrap"></div>
+            </div>
+          </div>
+
+          <!-- Right Column: Clinical Interaction Analysis -->
+          <div class="glass-card">
+            <div class="card-header">
+              <h2 class="card-title">Clinical Findings & Warnings</h2>
+              <span id="interactionSummaryBadge" class="status-indicator-pill neutral">Ready</span>
+            </div>
+
+            <div id="interactionResultsArea" class="results-scroll-area">
+              <div class="empty-state-card">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="empty-state-icon">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                  <path d="M12 8v4"/>
+                  <path d="M12 16h.01"/>
+                </svg>
+                <div class="empty-state-title">Awaiting Medication Input</div>
+                <div class="empty-state-text">Select at least two medications to cross-reference our clinical interaction matrix and evaluate metabolic risks.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. LAB REPORT EXPLAINER VIEW -->
+      <section id="view-labs" class="content-panel" role="tabpanel" aria-labelledby="tab-labs">
+        <div class="panel-header-block">
+          <div>
+            <h1 class="section-title">Clinical Lab Report Demystifier</h1>
+            <p class="section-desc">Look up blood tests, metabolic panels, and organ biomarkers. Enter your exact numerical values to view visual reference ranges and patient-centered explanations.</p>
+          </div>
+
+          <!-- Lab Category Filter Tabs -->
+          <div class="category-filter-strip">
+            <button class="filter-chip active" data-category="all">All Tests</button>
+            <button class="filter-chip" data-category="cbc">Complete Blood Count (CBC)</button>
+            <button class="filter-chip" data-category="cmp">Metabolic & Kidney</button>
+            <button class="filter-chip" data-category="lipid">Lipids & Heart</button>
+            <button class="filter-chip" data-category="liver">Liver Panel</button>
+            <button class="filter-chip" data-category="thyroid">Thyroid & Vitamins</button>
+          </div>
+        </div>
+
+        <div class="layout-grid-2col">
+          <!-- Left Column: Test Browser -->
+          <div class="glass-card">
+            <div class="card-header">
+              <h2 class="card-title">Select Diagnostic Biomarker</h2>
+              <span id="testCounter" class="counter-badge">25 Tests</span>
+            </div>
+
+            <div class="input-with-icon">
+              <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+              <input type="text" id="labSearchInput" class="glass-input" placeholder="Search test name or acronym (e.g. HbA1c, Ferritin, TSH)...">
+            </div>
+
+            <div id="labTestsList" class="tests-browser-list"></div>
+          </div>
+
+          <!-- Right Column: Interactive Evaluator -->
+          <div class="glass-card" id="labDetailContainer">
+            <div id="labDetailEmpty" class="empty-state-card">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="empty-state-icon">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+                <line x1="16" y1="13" x2="8" y2="13"></line>
+                <line x1="16" y1="17" x2="8" y2="17"></line>
+                <polyline points="10 9 9 9 8 9"></polyline>
+              </svg>
+              <div class="empty-state-title">Select a Lab Test</div>
+              <div class="empty-state-text">Choose a diagnostic test from the left panel to inspect adult reference brackets, enter your result, and see where your value lands.</div>
+            </div>
+
+            <div id="labDetailActive" class="lab-detail-view hidden">
+              <div class="detail-header-row">
+                <div>
+                  <div class="test-panel-badge" id="detailPanelBadge">Complete Blood Count</div>
+                  <h2 class="detail-title" id="detailTestName">Hemoglobin (Hb)</h2>
+                </div>
+                <div class="unit-box">Standard Unit: <strong id="detailUnit">g/dL</strong></div>
+              </div>
+
+              <!-- Live Value Evaluator Box -->
+              <div class="evaluator-card">
+                <div class="evaluator-form">
+                  <label for="userLabValueInput" class="evaluator-label">Your Lab Result Value:</label>
+                  <div class="input-with-unit">
+                    <input type="number" step="any" id="userLabValueInput" class="glass-input-lg" placeholder="e.g. 14.2">
+                    <span class="unit-tag" id="inputUnitTag">g/dL</span>
+                  </div>
+                </div>
+
+                <!-- Visual Range Gauge -->
+                <div class="range-meter-container">
+                  <div class="range-status-bar" id="rangeStatusBar">
+                    <div class="range-segment seg-low" title="Low range">Low</div>
+                    <div class="range-segment seg-normal" title="Normal / Optimal range">Optimal</div>
+                    <div class="range-segment seg-high" title="Elevated range">High</div>
+                    <div id="userValuePointer" class="value-pointer hidden" style="left: 50%;">
+                      <div class="pointer-pin"></div>
+                      <div class="pointer-bubble" id="pointerValueLabel">0</div>
+                    </div>
+                  </div>
+                  <div class="range-ticks-row">
+                    <span id="tickMin">0</span>
+                    <span id="tickNormalMin">13.8</span>
+                    <span id="tickNormalMax">17.2</span>
+                    <span id="tickMax">22</span>
+                  </div>
+                </div>
+
+                <div id="evaluationFeedback" class="evaluation-feedback-box hidden"></div>
+              </div>
+
+              <!-- Plain Language Explanation -->
+              <div class="explanation-section">
+                <h3 class="explainer-heading">What this test measures:</h3>
+                <p class="explainer-text" id="detailDescription"></p>
+
+                <h3 class="explainer-heading">Non-emergency reasons values can fluctuate:</h3>
+                <p class="explainer-text" id="detailBenignReasons"></p>
+
+                <h3 class="explainer-heading">Questions to ask your doctor:</h3>
+                <ul class="doctor-questions-list" id="detailQuestions"></ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. EMERGENCY MEDICAL CARD (ICE) VIEW -->
+      <section id="view-emergency" class="content-panel" role="tabpanel" aria-labelledby="tab-emergency">
+        <div class="panel-header-block">
+          <div>
+            <h1 class="section-title">Emergency Medical Identification Card (ICE)</h1>
+            <p class="section-desc">Generate an offline, high-contrast Emergency Medical Card with your vital blood type, allergies, conditions, and emergency contacts. Formatted for wallet printing and lock-screen wallpaper.</p>
+          </div>
+          <div class="export-actions-cluster">
+            <button id="printCardBtn" class="primary-btn">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 6 2 18 2 18 9"></polyline>
+                <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+                <rect x="6" y="14" width="12" height="8"></rect>
+              </svg>
+              <span>Print Wallet Sheet</span>
+            </button>
+            <button id="copyIceTextBtn" class="secondary-btn">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              <span>Copy Emergency Text</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="layout-grid-2col">
+          <!-- Left Column: ICE Form -->
+          <div class="glass-card">
+            <div class="card-header">
+              <h2 class="card-title">Emergency Information Form</h2>
+              <button id="sampleIceBtn" class="text-action-btn">Load Demo Data</button>
+            </div>
+
+            <form id="iceForm" class="ice-form-grid" onsubmit="event.preventDefault();">
+              <div class="form-group col-span-2">
+                <label for="iceFullName">Full Legal Name</label>
+                <input type="text" id="iceFullName" class="glass-input" placeholder="e.g. Jane M. Doe">
+              </div>
+
+              <div class="form-group">
+                <label for="iceDob">Date of Birth</label>
+                <input type="date" id="iceDob" class="glass-input">
+              </div>
+
+              <div class="form-group">
+                <label for="iceBloodType">Blood Type</label>
+                <select id="iceBloodType" class="glass-input glass-select">
+                  <option value="Unknown">Unknown</option>
+                  <option value="O+">O Positive (O+)</option>
+                  <option value="O-">O Negative (O- universal donor)</option>
+                  <option value="A+">A Positive (A+)</option>
+                  <option value="A-">A Negative (A-)</option>
+                  <option value="B+">B Positive (B+)</option>
+                  <option value="B-">B Negative (B-)</option>
+                  <option value="AB+">AB Positive (AB+ universal receiver)</option>
+                  <option value="AB-">AB Negative (AB-)</option>
+                </select>
+              </div>
+
+              <div class="form-group col-span-2">
+                <label for="iceContactPrimary">Primary Emergency Contact (Name, Relation, Phone)</label>
+                <input type="text" id="iceContactPrimary" class="glass-input" placeholder="e.g. John Doe (Spouse) - +1 (555) 234-5678">
+              </div>
+
+              <div class="form-group col-span-2">
+                <label for="iceContactSecondary">Secondary Contact (Optional)</label>
+                <input type="text" id="iceContactSecondary" class="glass-input" placeholder="e.g. Dr. Sarah Chen (Physician) - +1 (555) 987-6543">
+              </div>
+
+              <div class="form-group col-span-2">
+                <label for="iceAllergies">Critical Allergies (Foods, Medications, Latex)</label>
+                <input type="text" id="iceAllergies" class="glass-input alert-input-tint" placeholder="e.g. Penicillin, Peanuts, Sulfa Drugs">
+              </div>
+
+              <div class="form-group col-span-2">
+                <label for="iceConditions">Chronic Medical Conditions</label>
+                <input type="text" id="iceConditions" class="glass-input" placeholder="e.g. Type 1 Diabetes, Asthma, Hypertension">
+              </div>
+
+              <div class="form-group col-span-2">
+                <label for="iceMedications">Active Daily Medications</label>
+                <input type="text" id="iceMedications" class="glass-input" placeholder="e.g. Insulin Glargine 20u qHS, Lisinopril 10mg">
+              </div>
+
+              <div class="form-group col-span-2">
+                <label for="iceNotes">Implants or Vital Notes (Pacemaker, Stent, Organ Donor)</label>
+                <input type="text" id="iceNotes" class="glass-input" placeholder="e.g. Cardiac Pacemaker (2023), Organ Donor">
+              </div>
+            </form>
+          </div>
+
+          <!-- Right Column: Live Card Preview -->
+          <div class="glass-card">
+            <div class="card-header">
+              <h2 class="card-title">Live Identification Card Preview</h2>
+              <span class="preview-format-tag">ISO/IEC 7810 Standard Format</span>
+            </div>
+
+            <div class="card-preview-stage">
+              <!-- Physical Printable Wallet Card (Front) -->
+              <div class="medical-id-card front" id="cardFront">
+                <div class="card-top-bar">
+                  <div class="card-cross-mark">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                      <line x1="12" y1="5" x2="12" y2="19"></line>
+                      <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                    <span>EMERGENCY MEDICAL CARD</span>
+                  </div>
+                  <div class="card-blood-badge" id="cardBloodDisplay">O+</div>
+                </div>
+
+                <div class="card-body">
+                  <div class="card-name-row">
+                    <div class="card-label">FULL NAME</div>
+                    <div class="card-value-lg" id="cardNameDisplay">Jane M. Doe</div>
+                  </div>
+
+                  <div class="card-grid-2col">
+                    <div>
+                      <div class="card-label">DATE OF BIRTH</div>
+                      <div class="card-value" id="cardDobDisplay">1990-05-15</div>
+                    </div>
+                    <div>
+                      <div class="card-label">ORGAN DONOR</div>
+                      <div class="card-value" id="cardDonorDisplay">Yes</div>
+                    </div>
+                  </div>
+
+                  <div class="card-section">
+                    <div class="card-label">PRIMARY EMERGENCY CONTACT</div>
+                    <div class="card-value highlight-contact" id="cardPrimaryDisplay">John Doe (Spouse) - +1 (555) 234-5678</div>
+                  </div>
+
+                  <div class="card-section" id="cardSecondaryWrap">
+                    <div class="card-label">SECONDARY CONTACT</div>
+                    <div class="card-value" id="cardSecondaryDisplay">Dr. Sarah Chen - +1 (555) 987-6543</div>
+                  </div>
+                </div>
+
+                <div class="card-bottom-bar">
+                  <span>MEDGUARD SECURE ICE PROTOCOL</span>
+                  <span>SEE REVERSE FOR ALLERGIES</span>
+                </div>
+              </div>
+
+              <!-- Physical Printable Wallet Card (Back) -->
+              <div class="medical-id-card back" id="cardBack">
+                <div class="card-top-bar alert-bar">
+                  <div class="card-cross-mark">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                      <polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon>
+                      <line x1="12" y1="8" x2="12" y2="12"></line>
+                      <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                    </svg>
+                    <span>CRITICAL CLINICAL DATA</span>
+                  </div>
+                  <span class="card-id-tag">CARD REVERSE</span>
+                </div>
+
+                <div class="card-body">
+                  <div class="card-section">
+                    <div class="card-label alert-label">CRITICAL ALLERGIES</div>
+                    <div class="card-value alert-text" id="cardAllergiesDisplay">Penicillin, Peanuts, Sulfa Drugs</div>
+                  </div>
+
+                  <div class="card-section">
+                    <div class="card-label">CHRONIC MEDICAL CONDITIONS</div>
+                    <div class="card-value" id="cardConditionsDisplay">Type 1 Diabetes, Asthma, Hypertension</div>
+                  </div>
+
+                  <div class="card-section">
+                    <div class="card-label">ACTIVE DAILY MEDICATIONS</div>
+                    <div class="card-value" id="cardMedicationsDisplay">Insulin Glargine 20u qHS, Lisinopril 10mg</div>
+                  </div>
+
+                  <div class="card-section">
+                    <div class="card-label">MEDICAL IMPLANTS / NOTES</div>
+                    <div class="card-value" id="cardNotesDisplay">Cardiac Pacemaker (2023), Organ Donor</div>
+                  </div>
+                </div>
+
+                <div class="card-bottom-bar">
+                  <span>ZERO CLOUD TELEMETRY</span>
+                  <span>LOCAL-FIRST ENCRYPTION</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Print cutout advisory note -->
+            <div class="card-hint-text">
+              Note: Clicking <strong>Print Wallet Sheet</strong> formats both card faces side-by-side with fold and cut guides to fit cleanly inside any standard wallet card slot.
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <div class="footer-inner">
+        <div>
+          <strong>MedGuard</strong> - Open Source Personal Health Safety. Released under the MIT License.
+        </div>
+        <div class="footer-links">
+          <span>Zero-Telemetry Architecture</span>
+          <span class="bullet">•</span>
+          <span>Educational & Reference Use</span>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Notification Toast -->
+  <div id="toastMessage" class="toast hidden"></div>
+
+  <!-- Application Logic -->
+  <script src="app.js"></script>
+</body>
+</html>
