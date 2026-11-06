@@ -19,34 +19,18 @@
     <!-- Top Header -->
     <header class="app-header">
       <div class="brand-cluster">
-        <a href="#landing-hero" class="brand-link">
-          <div class="brand-emblem">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-              <path d="M12 8v8"/>
-              <path d="M8 12h8"/>
-            </svg>
-          </div>
-          <div class="brand-text">
-            <div class="brand-title">MedGuard</div>
-            <div class="brand-subtitle">Health Safety & Emergency Companion</div>
-          </div>
-        </a>
-      </div>
-
-      <!-- Header Navigation Links -->
-      <nav class="header-nav-links" aria-label="Page Sections">
-        <a href="#landing-problem" class="header-link">The Problem</a>
-        <a href="#landing-features" class="header-link">Capabilities</a>
-        <a href="#landing-how" class="header-link">How It Works</a>
-        <a href="#interactive-suite" class="header-link highlight-link">Launch Tools</a>
-        <a href="https://github.com/pranov888/medguard" target="_blank" rel="noopener noreferrer" class="header-link github-link">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
+        <div class="brand-emblem">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            <path d="M12 8v8"/>
+            <path d="M8 12h8"/>
           </svg>
-          <span>GitHub</span>
-        </a>
-      </nav>
+        </div>
+        <div class="brand-text">
+          <div class="brand-title">MedGuard</div>
+          <div class="brand-subtitle">Health Safety & Emergency Companion</div>
+        </div>
+      </div>
 
       <div class="header-controls">
         <div class="privacy-badge" title="All processing occurs strictly inside your browser. Zero network tracking.">
@@ -72,203 +56,38 @@
       </div>
     </header>
 
-    <!-- LANDING HERO SECTION -->
-    <section id="landing-hero" class="hero-section">
-      <div class="hero-badge-pill">
-        <span class="pulse-indicator"></span>
-        <span>OPEN-SOURCE CLINICAL UTILITY • 100% ZERO-CLOUD PRIVACY</span>
-      </div>
+    <!-- Main Navigation Bar -->
+    <nav class="nav-segment-bar" role="tablist" aria-label="Primary Navigation">
+      <button class="nav-pill active" id="tab-drugs" role="tab" aria-selected="true" aria-controls="view-drugs">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"/>
+          <path d="m8.5 8.5 7 7"/>
+        </svg>
+        <span>Drug Interactions</span>
+      </button>
 
-      <h1 class="hero-headline">
-        Personal Health Safety, Engineered for the Real World.
-      </h1>
+      <button class="nav-pill" id="tab-labs" role="tab" aria-selected="false" aria-controls="view-labs">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 2v4a2 2 0 0 0 2 2h4"/>
+          <path d="M16 22H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8l6 6v12a2 2 0 0 1-2 2z"/>
+          <path d="M10 12v6"/>
+          <path d="M14 15v3"/>
+          <path d="M7 16v2"/>
+        </svg>
+        <span>Lab Report Explainer</span>
+      </button>
 
-      <p class="hero-subtext">
-        MedGuard prevents deadly polypharmacy drug interactions, demystifies confusing clinical lab tests into actionable insights, and generates offline emergency medical ID cards. Zero accounts, zero tracking, zero data leakage.
-      </p>
-
-      <div class="hero-actions">
-        <a href="#interactive-suite" class="hero-primary-btn">
-          <span>Launch Interactive Suite</span>
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="5" y1="12" x2="19" y2="12"></line>
-            <polyline points="12 5 19 12 12 19"></polyline>
-          </svg>
-        </a>
-        <a href="https://github.com/pranov888/medguard" target="_blank" rel="noopener noreferrer" class="hero-secondary-btn">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
-          </svg>
-          <span>Star on GitHub</span>
-        </a>
-      </div>
-
-      <!-- Live Metric Badges Bar -->
-      <div class="hero-stats-strip">
-        <div class="stat-cell">
-          <div class="stat-number">40+</div>
-          <div class="stat-label">Essential Medications</div>
-        </div>
-        <div class="stat-divider"></div>
-        <div class="stat-cell">
-          <div class="stat-number">50+</div>
-          <div class="stat-label">Clinical Pairwise Interactions</div>
-        </div>
-        <div class="stat-divider"></div>
-        <div class="stat-cell">
-          <div class="stat-number">18</div>
-          <div class="stat-label">Diagnostic Biomarkers</div>
-        </div>
-        <div class="stat-divider"></div>
-        <div class="stat-cell">
-          <div class="stat-number">100%</div>
-          <div class="stat-label">Local Client Privacy</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- REAL-WORLD PROBLEM & VALUE SECTION -->
-    <section id="landing-problem" class="landing-section">
-      <div class="section-title-wrap">
-        <span class="section-kicker">THE REAL-WORLD PROBLEM</span>
-        <h2 class="section-heading">Why Healthcare Safety Needed a Local Companion</h2>
-        <p class="section-subheading">Every year, millions of preventable medical crises occur because patients lack immediate access to understandable pharmacologic guidance and emergency identification.</p>
-      </div>
-
-      <div class="bento-grid">
-        <!-- Bento Card 1 -->
-        <div class="bento-card bento-span-2">
-          <div class="bento-icon-wrapper red-tint">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"/>
-              <path d="m8.5 8.5 7 7"/>
-            </svg>
-          </div>
-          <h3 class="bento-title">The Polypharmacy Danger</h3>
-          <p class="bento-text">
-            Patients often receive prescriptions from multiple specialists without cross-verification. Combining everyday medications like Warfarin with Aspirin, or Sildenafil with Nitrates, can lead to severe gastrointestinal hemorrhage, sudden fatal hypotension, or acute rhabdomyolysis. MedGuard cross-checks your full active tray instantly.
-          </p>
-          <div class="bento-tag">Adverse Drug Events (ADE) Prevention</div>
-        </div>
-
-        <!-- Bento Card 2 -->
-        <div class="bento-card">
-          <div class="bento-icon-wrapper cyan-tint">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-              <polyline points="14 2 14 8 20 8"></polyline>
-              <line x1="16" y1="13" x2="8" y2="13"></line>
-              <line x1="16" y1="17" x2="8" y2="17"></line>
-            </svg>
-          </div>
-          <h3 class="bento-title">The Diagnostic Black Box</h3>
-          <p class="bento-text">
-            Blood test reports arrive with dense acronyms (e.g. eGFR, ALT, HbA1c) that induce anxiety. MedGuard contextualizes normal adult brackets and lists non-emergency lifestyle factors (hydration, workouts) that cause minor fluctuations.
-          </p>
-          <div class="bento-tag">Evidence-Based Patient Literacy</div>
-        </div>
-
-        <!-- Bento Card 3 -->
-        <div class="bento-card">
-          <div class="bento-icon-wrapper amber-tint">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="2" y="4" width="20" height="16" rx="3"/>
-              <path d="M12 8v8"/>
-              <path d="M8 12h8"/>
-            </svg>
-          </div>
-          <h3 class="bento-title">The Golden Hour Response Gap</h3>
-          <p class="bento-text">
-            When accidents happen, unconscious patients cannot communicate blood types or anaphylactic penicillin allergies. First responders need physical, standardized identification immediately. MedGuard produces printable ISO-standard wallet cards in seconds.
-          </p>
-          <div class="bento-tag">In Case of Emergency (ICE) Protocols</div>
-        </div>
-
-        <!-- Bento Card 4 -->
-        <div class="bento-card bento-span-2">
-          <div class="bento-icon-wrapper green-tint">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-              <circle cx="12" cy="11" r="3"/>
-            </svg>
-          </div>
-          <h3 class="bento-title">Cryptographic Zero-Cloud Sovereignty</h3>
-          <p class="bento-text">
-            Personal health data should never be collected by third-party analytics, ad brokers, or cloud databases. MedGuard operates with a strictly client-side architecture: zero API telemetry, zero tracking pixels, and 100% offline capability.
-          </p>
-          <div class="bento-tag">Total HIPAA-Grade Client Privacy</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- HOW IT WORKS STEP JOURNEY -->
-    <section id="landing-how" class="landing-section">
-      <div class="section-title-wrap">
-        <span class="section-kicker">HOW IT WORKS</span>
-        <h2 class="section-heading">Three Frictionless Steps to Complete Clarity</h2>
-        <p class="section-subheading">Designed for patients, caretakers, and families with no medical background required.</p>
-      </div>
-
-      <div class="steps-grid">
-        <div class="step-card">
-          <div class="step-badge">STEP 01</div>
-          <h3 class="step-title">Assemble Your Active Tray</h3>
-          <p class="step-text">Search generic or brand names (e.g. Warfarin, Metformin, Advil, St. John's Wort) or choose a preset clinical scenario to populate your tray.</p>
-        </div>
-
-        <div class="step-card">
-          <div class="step-badge">STEP 02</div>
-          <h3 class="step-title">Inspect Clinical Severity</h3>
-          <p class="step-text">Instantly review categorized warnings (Critical, Major, Moderate), biological mechanisms, and actionable recommendations for your doctor.</p>
-        </div>
-
-        <div class="step-card">
-          <div class="step-badge">STEP 03</div>
-          <h3 class="step-title">Generate ICE Wallet Card</h3>
-          <p class="step-text">Enter your emergency contacts, allergies, and blood type to preview and print a precision ISO/IEC 7810 ID-1 standard wallet card.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- INTERACTIVE SUITE ANCHOR & NAVIGATION -->
-    <div id="interactive-suite" class="suite-divider-block">
-      <div class="suite-header-wrap">
-        <span class="section-kicker">LIVE INTERACTIVE APPLICATION</span>
-        <h2 class="section-heading">Experience MedGuard Live in Browser</h2>
-      </div>
-
-      <nav class="nav-segment-bar" role="tablist" aria-label="Primary Navigation">
-        <button class="nav-pill active" id="tab-drugs" role="tab" aria-selected="true" aria-controls="view-drugs">
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"/>
-            <path d="m8.5 8.5 7 7"/>
-          </svg>
-          <span>Drug Interactions</span>
-        </button>
-
-        <button class="nav-pill" id="tab-labs" role="tab" aria-selected="false" aria-controls="view-labs">
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M14 2v4a2 2 0 0 0 2 2h4"/>
-            <path d="M16 22H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8l6 6v12a2 2 0 0 1-2 2z"/>
-            <path d="M10 12v6"/>
-            <path d="M14 15v3"/>
-            <path d="M7 16v2"/>
-          </svg>
-          <span>Lab Report Explainer</span>
-        </button>
-
-        <button class="nav-pill" id="tab-emergency" role="tab" aria-selected="false" aria-controls="view-emergency">
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="2" y="4" width="20" height="16" rx="3"/>
-            <circle cx="8" cy="10" r="2"/>
-            <path d="M14 10h4"/>
-            <path d="M14 14h4"/>
-            <path d="M6 16h4"/>
-          </svg>
-          <span>Emergency Medical Card (ICE)</span>
-        </button>
-      </nav>
-    </div>
+      <button class="nav-pill" id="tab-emergency" role="tab" aria-selected="false" aria-controls="view-emergency">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="4" width="20" height="16" rx="3"/>
+          <circle cx="8" cy="10" r="2"/>
+          <path d="M14 10h4"/>
+          <path d="M14 14h4"/>
+          <path d="M6 16h4"/>
+        </svg>
+        <span>Emergency Medical Card (ICE)</span>
+      </button>
+    </nav>
 
     <!-- CONTENT VIEWS -->
     <main class="main-content">
