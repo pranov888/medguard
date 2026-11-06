@@ -6,74 +6,78 @@
 
 /* --- Design Tokens & Color Palettes --- */
 :root {
-  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  --font-display: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: "Space Grotesk", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-body: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-sans: var(--font-body);
   
   --radius-xs: 6px;
   --radius-sm: 10px;
-  --radius-md: 14px;
-  --radius-lg: 22px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
   --radius-pill: 9999px;
   
   --transition-fast: 0.14s cubic-bezier(0.16, 1, 0.3, 1);
-  --transition-smooth: 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-smooth: 0.28s cubic-bezier(0.16, 1, 0.3, 1);
   --transition-bounce: 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 /* --------------------------------------------------------------------------
-   DARK THEME: Elite Obsidian & Surgical Mint Architecture
+   DARK THEME: Elite Deep Emerald & Obsidian Void Architecture
    Zero Flatness • Specular Rim Highlights • High-Contrast WCAG AAA
    -------------------------------------------------------------------------- */
 body.dark-theme {
-  --bg-canvas: #080a10;
-  --bg-surface: #0e121a;
+  --bg-void: #020607;
+  --bg-canvas: #04090b;
+  --bg-surface: #071215;
+  --bg-surface-elevated: #0b1c21;
   
   --text-main: #f8fafc;
   --text-muted: #94a3b8;
   --text-faint: #64748b;
   
   /* VisionOS Frosted Liquid Obsidian */
-  --glass-bg: rgba(14, 18, 28, 0.76);
-  --glass-bg-hover: rgba(22, 28, 44, 0.85);
+  --glass-bg: rgba(7, 18, 21, 0.76);
+  --glass-bg-hover: rgba(11, 28, 33, 0.85);
   --glass-border: rgba(255, 255, 255, 0.08);
   --glass-border-specular: rgba(255, 255, 255, 0.22);
-  --glass-shadow: 0 20px 48px -12px rgba(0, 0, 0, 0.82), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  --glass-shadow: 0 24px 64px -12px rgba(0, 0, 0, 0.88), inset 0 1px 0 rgba(255, 255, 255, 0.12);
   
   /* Inputs & Form Fields */
-  --input-bg: rgba(10, 13, 22, 0.82);
+  --input-bg: rgba(4, 9, 11, 0.82);
   --input-border: rgba(255, 255, 255, 0.12);
   --input-focus: #10b981;
-  --input-focus-glow: rgba(16, 185, 129, 0.24);
+  --input-focus-glow: rgba(16, 185, 129, 0.35);
   
   /* Brand Clinical Colors */
   --accent-primary: #10b981;
   --accent-primary-hover: #34d399;
-  --accent-primary-glow: rgba(16, 185, 129, 0.32);
+  --accent-primary-glow: rgba(16, 185, 129, 0.38);
   
   --accent-cyan: #06b6d4;
   --accent-indigo: #6366f1;
   
   /* Clinical Severity Palette */
   --severity-critical: #f43f5e;
-  --severity-critical-bg: rgba(244, 63, 94, 0.12);
-  --severity-critical-border: rgba(244, 63, 94, 0.32);
+  --severity-critical-bg: rgba(244, 63, 94, 0.14);
+  --severity-critical-border: rgba(244, 63, 94, 0.35);
   
   --severity-major: #f59e0b;
-  --severity-major-bg: rgba(245, 158, 11, 0.12);
-  --severity-major-border: rgba(245, 158, 11, 0.30);
+  --severity-major-bg: rgba(245, 158, 11, 0.14);
+  --severity-major-border: rgba(245, 158, 11, 0.32);
   
   --severity-moderate: #eab308;
-  --severity-moderate-bg: rgba(234, 179, 8, 0.10);
-  --severity-moderate-border: rgba(234, 179, 8, 0.28);
+  --severity-moderate-bg: rgba(234, 179, 8, 0.12);
+  --severity-moderate-border: rgba(234, 179, 8, 0.30);
   
-  --severity-minor: #38bdf8;
-  --severity-minor-bg: rgba(56, 189, 248, 0.10);
-  --severity-minor-border: rgba(56, 189, 248, 0.26);
+  --severity-minor: #06b6d4;
+  --severity-minor-bg: rgba(6, 182, 212, 0.12);
+  --severity-minor-border: rgba(6, 182, 212, 0.30);
 
   /* Deep Volumetric Ambient Glows */
-  --ambient-1: rgba(16, 185, 129, 0.08);
-  --ambient-2: rgba(99, 102, 241, 0.09);
-  --ambient-3: rgba(6, 182, 212, 0.07);
+  --ambient-1: rgba(16, 185, 129, 0.09);
+  --ambient-2: rgba(6, 182, 212, 0.08);
+  --ambient-3: rgba(99, 102, 241, 0.07);
 }
 
 /* --------------------------------------------------------------------------
@@ -149,6 +153,16 @@ body {
   overflow-x: hidden;
   line-height: 1.55;
   letter-spacing: -0.01em;
+}
+
+/* Interactive Canvas Background */
+.background-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 0;
 }
 
 /* Ambient Diffuse Lights & Subtle Grid Overlay */
@@ -249,16 +263,32 @@ body.light-theme .grid-backdrop {
 }
 
 .brand-emblem {
+  position: relative;
   width: 38px;
   height: 38px;
   border-radius: var(--radius-sm);
-  background: linear-gradient(135deg, rgba(16, 185, 129, 0.22), rgba(99, 102, 241, 0.22));
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.22), rgba(6, 182, 212, 0.22));
   border: 1px solid var(--glass-border-specular);
   display: flex;
   align-items: center;
   justify-content: center;
   color: var(--accent-primary);
   box-shadow: 0 4px 14px var(--accent-primary-glow);
+}
+
+.emblem-radar-pulse {
+  position: absolute;
+  inset: -3px;
+  border-radius: 12px;
+  border: 1px solid var(--accent-primary);
+  opacity: 0;
+  animation: radarPulse 2.8s infinite;
+}
+
+@keyframes radarPulse {
+  0% { transform: scale(0.9); opacity: 0.8; }
+  70% { transform: scale(1.35); opacity: 0; }
+  100% { transform: scale(1.4); opacity: 0; }
 }
 
 .brand-title {
@@ -1678,6 +1708,7 @@ body.light-theme .spotlight-card::before {
   flex-direction: column;
   gap: 20px;
   align-items: center;
+  perspective: 1200px;
 }
 
 .preview-format-tag {
@@ -1698,10 +1729,19 @@ body.light-theme .spotlight-card::before {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.65);
+  box-shadow: 0 20px 48px -12px rgba(0, 0, 0, 0.78), inset 0 1px 0 rgba(255, 255, 255, 0.16);
   position: relative;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.14);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transform-style: preserve-3d;
+}
+
+.holo-glare {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, transparent 60%);
+  pointer-events: none;
 }
 
 .medical-id-card.front {

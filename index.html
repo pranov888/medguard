@@ -4,11 +4,20 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="MedGuard - Open-source personal health safety companion. Check drug interactions, demystify lab results, and generate emergency medical cards with 100% offline privacy.">
-  <meta name="theme-color" content="#0a0f1d">
-  <title>MedGuard - Personal Health Safety & Emergency Companion</title>
+  <meta name="theme-color" content="#020607">
+  <title>MedGuard • Clinical Safety & Emergency Companion</title>
+
+  <!-- Typography: Plus Jakarta Sans, Space Grotesk, Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="style.css">
 </head>
 <body class="dark-theme">
+  <!-- Interactive Biochemical Mesh Canvas -->
+  <canvas id="meshCanvas" class="background-canvas"></canvas>
+
   <!-- Subtle Grid Texture & Ambient Specular Glows -->
   <div class="grid-backdrop"></div>
   <div class="ambient-glow glow-1"></div>
@@ -26,6 +35,7 @@
             <path d="M12 8v8"/>
             <path d="M8 12h8"/>
           </svg>
+          <span class="emblem-radar-pulse"></span>
         </div>
         <div class="brand-text">
           <div class="brand-title">MedGuard</div>
@@ -375,9 +385,10 @@
               <span class="preview-format-tag">ISO/IEC 7810 Standard Format</span>
             </div>
 
-            <div class="card-preview-stage">
+            <div class="card-preview-stage" id="cardPreviewStage">
               <!-- Physical Printable Wallet Card (Front) -->
               <div class="medical-id-card front" id="cardFront">
+                <div class="holo-glare"></div>
                 <div class="card-top-bar">
                   <div class="card-cross-mark">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -425,6 +436,7 @@
 
               <!-- Physical Printable Wallet Card (Back) -->
               <div class="medical-id-card back" id="cardBack">
+                <div class="holo-glare"></div>
                 <div class="card-top-bar alert-bar">
                   <div class="card-cross-mark">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
