@@ -718,23 +718,30 @@
   // ---------------------------------------------------------------------------
   // 7. Tab Navigation
   // ---------------------------------------------------------------------------
+  function switchTab(viewId) {
+    const tabs = [
+      { btn: dom.tabDrugs, view: dom.viewDrugs, id: 'view-drugs' },
+      { btn: dom.tabLabs, view: dom.viewLabs, id: 'view-labs' },
+      { btn: dom.tabEmergency, view: dom.viewEmergency, id: 'view-emergency' }
+    ];
+    tabs.forEach(t => {
+      const match = t.id === viewId;
+      t.btn.classList.toggle('active', match);
+      t.btn.setAttribute('aria-selected', match ? 'true' : 'false');
+      t.view.classList.toggle('active', match);
+    });
+  }
+
   function initNavigation() {
     const tabs = [
-      { btn: dom.tabDrugs, view: dom.viewDrugs },
-      { btn: dom.tabLabs, view: dom.viewLabs },
-      { btn: dom.tabEmergency, view: dom.viewEmergency }
+      { btn: dom.tabDrugs, view: dom.viewDrugs, id: 'view-drugs' },
+      { btn: dom.tabLabs, view: dom.viewLabs, id: 'view-labs' },
+      { btn: dom.tabEmergency, view: dom.viewEmergency, id: 'view-emergency' }
     ];
 
-    tabs.forEach(({ btn, view }) => {
+    tabs.forEach(({ btn, id }) => {
       btn.addEventListener('click', () => {
-        tabs.forEach(t => {
-          t.btn.classList.remove('active');
-          t.btn.setAttribute('aria-selected', 'false');
-          t.view.classList.remove('active');
-        });
-        btn.classList.add('active');
-        btn.setAttribute('aria-selected', 'true');
-        view.classList.add('active');
+        switchTab(id);
       });
     });
   }
@@ -1091,21 +1098,36 @@
     dom.pointerValueLabel.textContent = `${val} ${test.unit}`;
     dom.userValuePointer.classList.remove('hidden');
 
+    // Dynamic Pin and Bubble Styling
+    const pin = dom.userValuePointer.querySelector('.pointer-pin');
+
     // Feedback
     dom.evaluationFeedback.classList.remove('hidden');
     if (val < optMin) {
+      if (pin) pin.style.borderTopColor = '#38bdf8';
+      dom.pointerValueLabel.style.background = '#0284c7';
+      dom.pointerValueLabel.style.color = '#ffffff';
+
       dom.evaluationFeedback.className = 'evaluation-feedback-box deviant';
       dom.evaluationFeedback.innerHTML = `
         <strong>Result: Lower than Standard Reference Interval (${optMin} - ${optMax} ${test.unit})</strong>
         <p style="margin-top: 4px; font-size: 0.82rem;">Your value of ${val} ${test.unit} falls below standard adult baseline brackets. Review the non-emergency causes below and discuss with your clinician.</p>
       `;
     } else if (val > optMax) {
+      if (pin) pin.style.borderTopColor = '#f43f5e';
+      dom.pointerValueLabel.style.background = '#e11d48';
+      dom.pointerValueLabel.style.color = '#ffffff';
+
       dom.evaluationFeedback.className = 'evaluation-feedback-box deviant';
       dom.evaluationFeedback.innerHTML = `
         <strong>Result: Higher than Standard Reference Interval (${optMin} - ${optMax} ${test.unit})</strong>
         <p style="margin-top: 4px; font-size: 0.82rem;">Your value of ${val} ${test.unit} falls above standard adult baseline brackets. Consider recent diet, workouts, or discuss with your clinician.</p>
       `;
     } else {
+      if (pin) pin.style.borderTopColor = '#10b981';
+      dom.pointerValueLabel.style.background = '#059669';
+      dom.pointerValueLabel.style.color = '#ffffff';
+
       dom.evaluationFeedback.className = 'evaluation-feedback-box optimal';
       dom.evaluationFeedback.innerHTML = `
         <strong>Result: Within Optimal Adult Reference Interval (${optMin} - ${optMax} ${test.unit})</strong>
@@ -1277,7 +1299,50 @@
   }
 
   // ---------------------------------------------------------------------------
-  // 12. Application Bootstrapper
+  // 12. Spotlight Micro-Interaction
+  // ---------------------------------------------------------------------------
+  function initSpotlightCards() {
+    const cards = document.querySelectorAll('.spotlight-card');
+    cards.forEach(card => {
+      card.addEventListener('mousemove', e => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        card.style.setProperty('--mouse-x', `${x}px`);
+        card.style.setProperty('--mouse-y', `${y}px`);
+      });
+    });
+  }
+
+  // ---------------------------------------------------------------------------
+  // 13. Global Keyboard Shortcuts
+  // ---------------------------------------------------------------------------
+  function initKeyboardShortcuts() {
+    window.addEventListener('keydown', e => {
+      const tag = (e.target.tagName || '').toLowerCase();
+      const isInput = tag === 'input' || tag === 'textarea' || tag === 'select' || e.target.isContentEditable;
+
+      if ((e.key === '/' || ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k')) && !isInput) {
+        e.preventDefault();
+        if (dom.viewLabs.classList.contains('active')) {
+          dom.labSearchInput.focus();
+          dom.labSearchInput.select();
+        } else {
+          switchTab('view-drugs');
+          dom.drugSearchInput.focus();
+          dom.drugSearchInput.select();
+        }
+      } else if (e.key === 'Escape' && isInput) {
+        e.target.blur();
+        if (dom.drugSuggestionsBox) {
+          dom.drugSuggestionsBox.classList.add('hidden');
+        }
+      }
+    });
+  }
+
+  // ---------------------------------------------------------------------------
+  // 14. Application Bootstrapper
   // ---------------------------------------------------------------------------
   document.addEventListener('DOMContentLoaded', () => {
     initTheme();
@@ -1285,5 +1350,7 @@
     initDrugEngine();
     initLabEngine();
     initIceEngine();
+    initSpotlightCards();
+    initKeyboardShortcuts();
   });
 })();
