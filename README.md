@@ -4,6 +4,9 @@
 
 MedGuard is an accessible, zero-telemetry healthcare utility created to protect individuals, families, and caretakers from preventable medication errors, clarify complex medical blood tests, and equip first responders with vital emergency information during critical incidents.
 
+- **Live Production App**: [medguard-five-murex.vercel.app](https://medguard-five-murex.vercel.app)
+- **Source Code Repository**: [github.com/pranov888/medguard](https://github.com/pranov888/medguard)
+
 ---
 
 ## Key Features
