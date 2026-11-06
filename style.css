@@ -151,7 +151,26 @@ body {
   letter-spacing: -0.01em;
 }
 
-/* Specular Diffuse Glow Orbs */
+/* Ambient Diffuse Lights & Subtle Grid Overlay */
+.grid-backdrop {
+  position: fixed;
+  inset: 0;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 12%, #000 40%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 12%, #000 40%, transparent 100%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+body.light-theme .grid-backdrop {
+  background-image: 
+    linear-gradient(to right, rgba(0, 0, 0, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.04) 1px, transparent 1px);
+}
+
 .ambient-glow {
   position: fixed;
   border-radius: 50%;
@@ -972,6 +991,61 @@ body.light-theme .hero-headline {
 .glass-input:focus {
   border-color: var(--input-focus);
   box-shadow: 0 0 0 3px var(--input-focus-glow);
+}
+
+.search-kbd-badge {
+  position: absolute;
+  right: 14px;
+  background: var(--input-bg);
+  border: 1px solid var(--glass-border-specular);
+  border-radius: var(--radius-xs);
+  padding: 2px 7px;
+  font-size: 0.72rem;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: var(--text-faint);
+  pointer-events: none;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  transition: all var(--transition-fast);
+}
+
+.input-with-icon:focus-within .search-kbd-badge {
+  color: var(--accent-primary);
+  border-color: var(--accent-primary);
+}
+
+/* Spotlight Hardware Acceleration */
+.spotlight-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.spotlight-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    600px circle at var(--mouse-x, -1000px) var(--mouse-y, -1000px),
+    rgba(16, 185, 129, 0.12),
+    transparent 40%
+  );
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+body.light-theme .spotlight-card::before {
+  background: radial-gradient(
+    600px circle at var(--mouse-x, -1000px) var(--mouse-y, -1000px),
+    rgba(5, 150, 105, 0.08),
+    transparent 40%
+  );
+}
+
+.spotlight-card:hover::before {
+  opacity: 1;
 }
 
 .glass-input-lg {
