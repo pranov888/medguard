@@ -1342,7 +1342,141 @@
   }
 
   // ---------------------------------------------------------------------------
-  // 14. Application Bootstrapper
+  // 14. Interactive Biochemical Mesh Canvas
+  // ---------------------------------------------------------------------------
+  function initMeshCanvas() {
+    const canvas = document.getElementById('meshCanvas');
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    let width = (canvas.width = window.innerWidth);
+    let height = (canvas.height = window.innerHeight);
+
+    const mouse = { x: width / 2, y: height / 2, active: false };
+
+    window.addEventListener('mousemove', e => {
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
+      mouse.active = true;
+    });
+
+    window.addEventListener('resize', () => {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+      buildNodes();
+    });
+
+    const NODE_COUNT = Math.min(Math.floor((width * height) / 14000), 85);
+    let nodes = [];
+
+    function buildNodes() {
+      nodes = [];
+      for (let i = 0; i < NODE_COUNT; i++) {
+        nodes.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          vx: (Math.random() - 0.5) * 0.45,
+          vy: (Math.random() - 0.5) * 0.45,
+          radius: Math.random() < 0.25 ? 2.2 : 1.4,
+          baseAlpha: Math.random() * 0.4 + 0.2
+        });
+      }
+    }
+
+    buildNodes();
+
+    function render() {
+      ctx.clearRect(0, 0, width, height);
+
+      const isDark = document.body.classList.contains('dark-theme');
+      const nodeColor = isDark ? 'rgba(16, 185, 129,' : 'rgba(5, 150, 105,';
+      const lineColor = isDark ? 'rgba(6, 182, 212,' : 'rgba(2, 132, 199,';
+
+      for (let i = 0; i < nodes.length; i++) {
+        const a = nodes[i];
+        a.x += a.vx;
+        a.y += a.vy;
+
+        if (a.x < 0 || a.x > width) a.vx *= -1;
+        if (a.y < 0 || a.y > height) a.vy *= -1;
+
+        if (mouse.active) {
+          const dx = mouse.x - a.x;
+          const dy = mouse.y - a.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 180) {
+            const force = (180 - dist) / 180;
+            a.x += (dx / dist) * force * 0.6;
+            a.y += (dy / dist) * force * 0.6;
+          }
+        }
+
+        ctx.beginPath();
+        ctx.arc(a.x, a.y, a.radius, 0, Math.PI * 2);
+        ctx.fillStyle = `${nodeColor} ${a.baseAlpha})`;
+        ctx.fill();
+
+        for (let j = i + 1; j < nodes.length; j++) {
+          const b = nodes[j];
+          const dist = Math.hypot(a.x - b.x, a.y - b.y);
+          if (dist < 120) {
+            const alpha = (1 - dist / 120) * 0.18;
+            ctx.beginPath();
+            ctx.moveTo(a.x, a.y);
+            ctx.lineTo(b.x, b.y);
+            ctx.strokeStyle = `${lineColor} ${alpha})`;
+            ctx.lineWidth = 0.8;
+            ctx.stroke();
+          }
+        }
+      }
+
+      requestAnimationFrame(render);
+    }
+
+    render();
+  }
+
+  // ---------------------------------------------------------------------------
+  // 15. 3D Mouse Parallax Tilt for Medical ID Cards
+  // ---------------------------------------------------------------------------
+  function initCardTilt() {
+    const cards = document.querySelectorAll('.card-preview-stage .medical-id-card');
+    cards.forEach(card => {
+      const glare = card.querySelector('.holo-glare');
+      card.addEventListener('mousemove', e => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+
+        const rotateY = ((x - centerX) / centerX) * 12;
+        const rotateX = -((y - centerY) / centerY) * 12;
+
+        card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+
+        if (glare) {
+          const glareX = (x / rect.width) * 100;
+          const glareY = (y / rect.height) * 100;
+          glare.style.background = `radial-gradient(circle at ${glareX}% ${glareY}%, rgba(255, 255, 255, 0.22) 0%, transparent 65%)`;
+        }
+      });
+
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = 'rotateX(0deg) rotateY(0deg)';
+        if (glare) {
+          glare.style.background = 'linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, transparent 60%)';
+        }
+      });
+    });
+  }
+
+  // ---------------------------------------------------------------------------
+  // 16. Application Bootstrapper
   // ---------------------------------------------------------------------------
   document.addEventListener('DOMContentLoaded', () => {
     initTheme();
@@ -1352,5 +1486,7 @@
     initIceEngine();
     initSpotlightCards();
     initKeyboardShortcuts();
+    initMeshCanvas();
+    initCardTilt();
   });
 })();
