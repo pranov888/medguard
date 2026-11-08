@@ -695,7 +695,7 @@
   // 6. Theme Engine
   // ---------------------------------------------------------------------------
   function initTheme() {
-    const savedTheme = localStorage.getItem('medguard_theme') || 'dark';
+    const savedTheme = localStorage.getItem('medguard_theme') || 'light';
     setTheme(savedTheme);
 
     dom.themeToggleBtn.addEventListener('click', () => {
@@ -898,6 +898,9 @@
     if (ids.length < 2) {
       dom.interactionSummaryBadge.className = 'status-indicator-pill neutral';
       dom.interactionSummaryBadge.textContent = ids.length === 1 ? 'Select 1 More' : 'Ready';
+      if (dom.pairwiseMatrixCard) {
+        dom.pairwiseMatrixCard.style.display = 'none';
+      }
       dom.interactionResultsArea.innerHTML = `
         <div class="empty-state-card">
           <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="empty-state-icon">
@@ -938,10 +941,10 @@
       dom.interactionSummaryBadge.className = 'status-indicator-pill clean';
       dom.interactionSummaryBadge.textContent = 'No Critical Flags';
       dom.interactionResultsArea.innerHTML = `
-        <div class="finding-card" style="border-left-color: #10b981; background: rgba(16, 185, 129, 0.08);">
+        <div class="finding-card" style="border-left-color: #059669; background: var(--bg-mint-wash, #E7F8F4);">
           <div class="finding-top">
-            <div class="finding-pair" style="color: #10b981;">No Major Documented Interactions Detected</div>
-            <span class="severity-tag" style="background: #10b981; color: #fff;">Clear</span>
+            <div class="finding-pair" style="color: #059669;">No Major Documented Interactions Detected</div>
+            <span class="severity-tag" style="background: #059669; color: #fff;">Clear</span>
           </div>
           <div class="finding-desc">
             No dangerous pairwise interactions were detected between the ${ids.length} selected medications in our core clinical database.
@@ -951,6 +954,46 @@
           </div>
         </div>
       `;
+
+    // Render Pairwise Interaction Collision Matrix
+    if (dom.pairwiseMatrixCard && dom.pairwiseMatrixContainer) {
+      dom.pairwiseMatrixCard.style.display = 'block';
+      if (dom.matrixCountTag) {
+        dom.matrixCountTag.textContent = `${ids.length} x ${ids.length} Collision Matrix`;
+      }
+
+      const drugObjs = ids.map(id => DRUGS_CATALOG.find(d => d.id === id) || { id, name: id });
+
+      let matrixHtml = `<table class="matrix-table"><thead><tr><th class="matrix-th">Medication</th>`;
+      drugObjs.forEach(d => {
+        matrixHtml += `<th class="matrix-th">${d.name}</th>`;
+      });
+      matrixHtml += `</tr></thead><tbody>`;
+
+      drugObjs.forEach((rowDrug, rIdx) => {
+        matrixHtml += `<tr><th class="matrix-th">${rowDrug.name}</th>`;
+        drugObjs.forEach((colDrug, cIdx) => {
+          if (rIdx === cIdx) {
+            matrixHtml += `<td class="matrix-td matrix-cell-self">-</td>`;
+          } else {
+            const pairMatch = INTERACTION_PAIRS.find(p =>
+              (p.drugs[0] === rowDrug.id && p.drugs[1] === colDrug.id) ||
+              (p.drugs[0] === colDrug.id && p.drugs[1] === rowDrug.id)
+            );
+            if (pairMatch) {
+              const sev = pairMatch.severity;
+              const sevClass = sev === 'critical' ? 'matrix-cell-critical' : (sev === 'major' ? 'matrix-cell-major' : 'matrix-cell-moderate');
+              matrixHtml += `<td class="matrix-td ${sevClass}" title="${pairMatch.title}: ${pairMatch.description}">${sev.toUpperCase()}</td>`;
+            } else {
+              matrixHtml += `<td class="matrix-td matrix-cell-clean" title="No documented high-severity collision">CLEAN</td>`;
+            }
+          }
+        });
+        matrixHtml += `</tr>`;
+      });
+      matrixHtml += `</tbody></table>`;
+      dom.pairwiseMatrixContainer.innerHTML = matrixHtml;
+    }
       return;
     }
 
@@ -970,6 +1013,46 @@
         <div class="finding-action"><strong>Clinical Guidance:</strong> ${f.action}</div>
       </div>
     `).join('');
+
+    // Render Pairwise Interaction Collision Matrix
+    if (dom.pairwiseMatrixCard && dom.pairwiseMatrixContainer) {
+      dom.pairwiseMatrixCard.style.display = 'block';
+      if (dom.matrixCountTag) {
+        dom.matrixCountTag.textContent = `${ids.length} x ${ids.length} Collision Matrix`;
+      }
+
+      const drugObjs = ids.map(id => DRUGS_CATALOG.find(d => d.id === id) || { id, name: id });
+
+      let matrixHtml = `<table class="matrix-table"><thead><tr><th class="matrix-th">Medication</th>`;
+      drugObjs.forEach(d => {
+        matrixHtml += `<th class="matrix-th">${d.name}</th>`;
+      });
+      matrixHtml += `</tr></thead><tbody>`;
+
+      drugObjs.forEach((rowDrug, rIdx) => {
+        matrixHtml += `<tr><th class="matrix-th">${rowDrug.name}</th>`;
+        drugObjs.forEach((colDrug, cIdx) => {
+          if (rIdx === cIdx) {
+            matrixHtml += `<td class="matrix-td matrix-cell-self">-</td>`;
+          } else {
+            const pairMatch = INTERACTION_PAIRS.find(p =>
+              (p.drugs[0] === rowDrug.id && p.drugs[1] === colDrug.id) ||
+              (p.drugs[0] === colDrug.id && p.drugs[1] === rowDrug.id)
+            );
+            if (pairMatch) {
+              const sev = pairMatch.severity;
+              const sevClass = sev === 'critical' ? 'matrix-cell-critical' : (sev === 'major' ? 'matrix-cell-major' : 'matrix-cell-moderate');
+              matrixHtml += `<td class="matrix-td ${sevClass}" title="${pairMatch.title}: ${pairMatch.description}">${sev.toUpperCase()}</td>`;
+            } else {
+              matrixHtml += `<td class="matrix-td matrix-cell-clean" title="No documented high-severity collision">CLEAN</td>`;
+            }
+          }
+        });
+        matrixHtml += `</tr>`;
+      });
+      matrixHtml += `</tbody></table>`;
+      dom.pairwiseMatrixContainer.innerHTML = matrixHtml;
+    }
   }
 
   // ---------------------------------------------------------------------------
@@ -1056,11 +1139,27 @@
     dom.detailUnit.textContent = test.unit;
     dom.inputUnitTag.textContent = test.unit;
 
-    // Ticks
+    // Ticks & Dynamic Segment Widths (Bug 4 fix)
     dom.tickMin.textContent = test.min;
     dom.tickNormalMin.textContent = test.optimalMin;
     dom.tickNormalMax.textContent = test.optimalMax;
     dom.tickMax.textContent = test.max;
+
+    const totalRange = test.max - test.min;
+    const lowPct = ((test.optimalMin - test.min) / totalRange) * 100;
+    const optPct = ((test.optimalMax - test.optimalMin) / totalRange) * 100;
+    const highPct = ((test.max - test.optimalMax) / totalRange) * 100;
+
+    const segLow = document.getElementById('segLowBar');
+    const segNormal = document.getElementById('segNormalBar');
+    const segHigh = document.getElementById('segHighBar');
+
+    if (segLow) segLow.style.width = `${lowPct}%`;
+    if (segNormal) segNormal.style.width = `${optPct}%`;
+    if (segHigh) segHigh.style.width = `${highPct}%`;
+
+    if (dom.tickNormalMin) dom.tickNormalMin.style.left = `${lowPct}%`;
+    if (dom.tickNormalMax) dom.tickNormalMax.style.left = `${lowPct + optPct}%`;
 
     // Content
     dom.detailDescription.textContent = test.desc;
@@ -1351,8 +1450,23 @@
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    let width = (canvas.width = window.innerWidth);
-    let height = (canvas.height = window.innerHeight);
+    let width = window.innerWidth;
+    let height = window.innerHeight;
+
+    function resizeCanvas() {
+      const dpr = window.devicePixelRatio || 1;
+      width = window.innerWidth;
+      height = window.innerHeight;
+      canvas.width = width * dpr;
+      canvas.height = height * dpr;
+      canvas.style.width = width + 'px';
+      canvas.style.height = height + 'px';
+      if (ctx.resetTransform) {
+        ctx.resetTransform();
+      }
+      ctx.scale(dpr, dpr);
+      buildNodes();
+    }
 
     const mouse = { x: width / 2, y: height / 2, active: false };
 
@@ -1362,11 +1476,7 @@
       mouse.active = true;
     });
 
-    window.addEventListener('resize', () => {
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
-      buildNodes();
-    });
+    window.addEventListener('resize', resizeCanvas);
 
     const NODE_COUNT = Math.min(Math.floor((width * height) / 14000), 85);
     let nodes = [];
@@ -1385,14 +1495,14 @@
       }
     }
 
-    buildNodes();
+    resizeCanvas();
 
     function render() {
       ctx.clearRect(0, 0, width, height);
 
       const isDark = document.body.classList.contains('dark-theme');
-      const nodeColor = isDark ? 'rgba(16, 185, 129,' : 'rgba(5, 150, 105,';
-      const lineColor = isDark ? 'rgba(6, 182, 212,' : 'rgba(2, 132, 199,';
+      const nodeColor = isDark ? 'rgba(16, 185, 129,' : 'rgba(13, 27, 42,';
+      const lineColor = isDark ? 'rgba(6, 182, 212,' : 'rgba(0, 102, 204,';
 
       for (let i = 0; i < nodes.length; i++) {
         const a = nodes[i];
