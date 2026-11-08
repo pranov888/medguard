@@ -695,7 +695,7 @@
   // 6. Theme Engine
   // ---------------------------------------------------------------------------
   function initTheme() {
-    const savedTheme = localStorage.getItem('medguard_theme') || 'light';
+    const savedTheme = localStorage.getItem('medguard_theme') || 'dark';
     setTheme(savedTheme);
 
     dom.themeToggleBtn.addEventListener('click', () => {
@@ -941,10 +941,10 @@
       dom.interactionSummaryBadge.className = 'status-indicator-pill clean';
       dom.interactionSummaryBadge.textContent = 'No Critical Flags';
       dom.interactionResultsArea.innerHTML = `
-        <div class="finding-card" style="border-left-color: #059669; background: var(--bg-mint-wash, #E7F8F4);">
+        <div class="finding-card" style="border-left-color: #3B82F6; background: var(--bg-mint-wash, rgba(59, 130, 246, 0.12));">
           <div class="finding-top">
-            <div class="finding-pair" style="color: #059669;">No Major Documented Interactions Detected</div>
-            <span class="severity-tag" style="background: #059669; color: #fff;">Clear</span>
+            <div class="finding-pair" style="color: #60A5FA;">No Major Documented Interactions Detected</div>
+            <span class="severity-tag" style="background: #2563EB; color: #fff;">Clear</span>
           </div>
           <div class="finding-desc">
             No dangerous pairwise interactions were detected between the ${ids.length} selected medications in our core clinical database.
@@ -1223,8 +1223,8 @@
         <p style="margin-top: 4px; font-size: 0.82rem;">Your value of ${val} ${test.unit} falls above standard adult baseline brackets. Consider recent diet, workouts, or discuss with your clinician.</p>
       `;
     } else {
-      if (pin) pin.style.borderTopColor = '#10b981';
-      dom.pointerValueLabel.style.background = '#059669';
+      if (pin) pin.style.borderTopColor = '#3B82F6';
+      dom.pointerValueLabel.style.background = '#2563EB';
       dom.pointerValueLabel.style.color = '#ffffff';
 
       dom.evaluationFeedback.className = 'evaluation-feedback-box optimal';
@@ -1501,8 +1501,8 @@
       ctx.clearRect(0, 0, width, height);
 
       const isDark = document.body.classList.contains('dark-theme');
-      const nodeColor = isDark ? 'rgba(16, 185, 129,' : 'rgba(13, 27, 42,';
-      const lineColor = isDark ? 'rgba(6, 182, 212,' : 'rgba(0, 102, 204,';
+      const nodeColor = isDark ? 'rgba(255, 255, 255,' : 'rgba(13, 27, 42,';
+      const lineColor = isDark ? 'rgba(59, 130, 246,' : 'rgba(0, 102, 204,';
 
       for (let i = 0; i < nodes.length; i++) {
         const a = nodes[i];
