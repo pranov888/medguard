@@ -23,111 +23,110 @@
 }
 
 /* --------------------------------------------------------------------------
-   DARK THEME: Elite Deep Emerald & Obsidian Void Architecture
-   Zero Flatness • Specular Rim Highlights • High-Contrast WCAG AAA
+   PRIMARY THEME: Light Clinical Kinetic (Default)
+   Surgical White • Deep Ocean Navy • Clinical Emerald & Cobalt
+   -------------------------------------------------------------------------- */
+:root, body.light-theme {
+  --bg-canvas: #F8FAF9;
+  --bg-surface: #FFFFFF;
+  --bg-surface-elevated: #F1F6F5;
+  --bg-surface-subtle: #EBF3F1;
+  --bg-mint-wash: #E7F8F4;
+  
+  --text-main: #0D1B2A;
+  --text-muted: #334E68;
+  --text-faint: #627D98;
+  
+  --glass-bg: rgba(255, 255, 255, 0.94);
+  --glass-bg-hover: #FFFFFF;
+  --glass-border: rgba(13, 27, 42, 0.09);
+  --glass-border-specular: rgba(255, 255, 255, 0.95);
+  --glass-shadow: 0 16px 40px -8px rgba(13, 27, 42, 0.07), 0 2px 6px rgba(13, 27, 42, 0.02);
+  
+  --input-bg: #FFFFFF;
+  --input-border: rgba(13, 27, 42, 0.14);
+  --input-focus: #0066CC;
+  --input-focus-glow: rgba(0, 102, 204, 0.20);
+  
+  --accent-primary: #059669;
+  --accent-primary-hover: #047857;
+  --accent-primary-glow: rgba(5, 150, 105, 0.20);
+  
+  --accent-cyan: #0066CC;
+  --accent-indigo: #4F46E5;
+  
+  --severity-critical: #DC2626;
+  --severity-critical-bg: #FEE2E2;
+  --severity-critical-border: rgba(220, 38, 38, 0.35);
+  
+  --severity-major: #D97706;
+  --severity-major-bg: #FEF3C7;
+  --severity-major-border: rgba(217, 119, 6, 0.35);
+  
+  --severity-moderate: #B45309;
+  --severity-moderate-bg: rgba(217, 119, 6, 0.10);
+  --severity-moderate-border: rgba(217, 119, 6, 0.25);
+  
+  --severity-minor: #0066CC;
+  --severity-minor-bg: #E0EDFD;
+  --severity-minor-border: rgba(0, 102, 204, 0.25);
+
+  --ambient-1: rgba(5, 150, 105, 0.04);
+  --ambient-2: rgba(0, 102, 204, 0.04);
+  --ambient-3: rgba(13, 148, 136, 0.03);
+}
+
+/* --------------------------------------------------------------------------
+   DARK THEME: Midnight Obsidian (Optional Toggle)
    -------------------------------------------------------------------------- */
 body.dark-theme {
-  --bg-void: #020607;
-  --bg-canvas: #04090b;
+  --bg-canvas: #04090B;
   --bg-surface: #071215;
-  --bg-surface-elevated: #0b1c21;
+  --bg-surface-elevated: #0B1C21;
+  --bg-surface-subtle: #08171B;
+  --bg-mint-wash: rgba(16, 185, 129, 0.12);
   
-  --text-main: #f8fafc;
-  --text-muted: #94a3b8;
-  --text-faint: #64748b;
+  --text-main: #F8FAFC;
+  --text-muted: #94A3B8;
+  --text-faint: #64748B;
   
-  /* VisionOS Frosted Liquid Obsidian */
-  --glass-bg: rgba(7, 18, 21, 0.76);
-  --glass-bg-hover: rgba(11, 28, 33, 0.85);
+  --glass-bg: rgba(7, 18, 21, 0.78);
+  --glass-bg-hover: rgba(11, 28, 33, 0.90);
   --glass-border: rgba(255, 255, 255, 0.08);
   --glass-border-specular: rgba(255, 255, 255, 0.22);
   --glass-shadow: 0 24px 64px -12px rgba(0, 0, 0, 0.88), inset 0 1px 0 rgba(255, 255, 255, 0.12);
   
-  /* Inputs & Form Fields */
   --input-bg: rgba(4, 9, 11, 0.82);
   --input-border: rgba(255, 255, 255, 0.12);
-  --input-focus: #10b981;
+  --input-focus: #10B981;
   --input-focus-glow: rgba(16, 185, 129, 0.35);
   
-  /* Brand Clinical Colors */
-  --accent-primary: #10b981;
-  --accent-primary-hover: #34d399;
+  --accent-primary: #10B981;
+  --accent-primary-hover: #34D399;
   --accent-primary-glow: rgba(16, 185, 129, 0.38);
   
-  --accent-cyan: #06b6d4;
-  --accent-indigo: #6366f1;
+  --accent-cyan: #06B6D4;
+  --accent-indigo: #6366F1;
   
-  /* Clinical Severity Palette */
-  --severity-critical: #f43f5e;
+  --severity-critical: #F43F5E;
   --severity-critical-bg: rgba(244, 63, 94, 0.14);
   --severity-critical-border: rgba(244, 63, 94, 0.35);
   
-  --severity-major: #f59e0b;
+  --severity-major: #F59E0B;
   --severity-major-bg: rgba(245, 158, 11, 0.14);
   --severity-major-border: rgba(245, 158, 11, 0.32);
   
-  --severity-moderate: #eab308;
+  --severity-moderate: #EAB308;
   --severity-moderate-bg: rgba(234, 179, 8, 0.12);
   --severity-moderate-border: rgba(234, 179, 8, 0.30);
   
-  --severity-minor: #06b6d4;
+  --severity-minor: #06B6D4;
   --severity-minor-bg: rgba(6, 182, 212, 0.12);
   --severity-minor-border: rgba(6, 182, 212, 0.30);
 
-  /* Deep Volumetric Ambient Glows */
   --ambient-1: rgba(16, 185, 129, 0.09);
   --ambient-2: rgba(6, 182, 212, 0.08);
   --ambient-3: rgba(99, 102, 241, 0.07);
-}
-
-/* --------------------------------------------------------------------------
-   LIGHT THEME: Clinical White Liquid Glass
-   -------------------------------------------------------------------------- */
-body.light-theme {
-  --bg-canvas: #f8fafc;
-  --bg-surface: #ffffff;
-  
-  --text-main: #0f172a;
-  --text-muted: #475569;
-  --text-faint: #94a3b8;
-  
-  --glass-bg: rgba(255, 255, 255, 0.88);
-  --glass-bg-hover: rgba(255, 255, 255, 0.98);
-  --glass-border: rgba(0, 0, 0, 0.07);
-  --glass-border-specular: rgba(255, 255, 255, 1);
-  --glass-shadow: 0 16px 36px -10px rgba(15, 23, 42, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.8);
-  
-  --input-bg: rgba(248, 250, 252, 0.95);
-  --input-border: rgba(0, 0, 0, 0.12);
-  --input-focus: #059669;
-  --input-focus-glow: rgba(5, 150, 105, 0.18);
-  
-  --accent-primary: #059669;
-  --accent-primary-hover: #047857;
-  --accent-primary-glow: rgba(5, 150, 105, 0.22);
-  
-  --accent-cyan: #0284c7;
-  --accent-indigo: #4f46e5;
-  
-  --severity-critical: #e11d48;
-  --severity-critical-bg: rgba(225, 29, 72, 0.08);
-  --severity-critical-border: rgba(225, 29, 72, 0.25);
-  
-  --severity-major: #d97706;
-  --severity-major-bg: rgba(217, 119, 6, 0.08);
-  --severity-major-border: rgba(217, 119, 6, 0.25);
-  
-  --severity-moderate: #ca8a04;
-  --severity-moderate-bg: rgba(202, 138, 4, 0.08);
-  --severity-moderate-border: rgba(202, 138, 4, 0.22);
-  
-  --severity-minor: #0284c7;
-  --severity-minor-bg: rgba(2, 132, 199, 0.08);
-  --severity-minor-border: rgba(2, 132, 199, 0.20);
-
-  --ambient-1: rgba(5, 150, 105, 0.05);
-  --ambient-2: rgba(79, 70, 229, 0.04);
-  --ambient-3: rgba(2, 132, 199, 0.04);
 }
 
 /* --- Base Reset & Typography --- */
@@ -150,7 +149,8 @@ body {
   color: var(--text-main);
   min-height: 100vh;
   position: relative;
-  overflow-x: hidden;
+  overflow-x: clip;
+  max-width: 100%;
   line-height: 1.55;
   letter-spacing: -0.01em;
 }
@@ -158,9 +158,10 @@ body {
 /* Interactive Canvas Background */
 .background-canvas {
   position: fixed;
-  inset: 0;
-  width: 100vw;
-  height: 100vh;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   pointer-events: none;
   z-index: 0;
 }
@@ -1724,34 +1725,61 @@ body.light-theme .spotlight-card::before {
   width: 100%;
   max-width: 440px;
   aspect-ratio: 1.586 / 1; /* ISO/IEC 7810 ID-1 standard ratio */
+  position: relative;
+  overflow: visible;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transform-style: preserve-3d;
+  cursor: grab;
+}
+
+.card-face-inner {
+  width: 100%;
+  height: 100%;
   border-radius: var(--radius-md);
   padding: 18px 22px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  box-shadow: 0 20px 48px -12px rgba(0, 0, 0, 0.78), inset 0 1px 0 rgba(255, 255, 255, 0.16);
   position: relative;
   overflow: hidden;
+  box-shadow: 0 16px 36px -6px rgba(13, 27, 42, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(13, 27, 42, 0.12);
+  background: #FFFFFF;
+  color: #0D1B2A;
+  transition: box-shadow var(--transition-smooth);
+}
+
+.medical-id-card.front .card-face-inner {
+  background: #FFFFFF;
+  color: #0D1B2A;
+}
+
+.medical-id-card.back .card-face-inner {
+  background: #0D1B2A;
+  color: #FFFFFF;
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+body.dark-theme .card-face-inner {
+  box-shadow: 0 20px 48px -12px rgba(0, 0, 0, 0.78), inset 0 1px 0 rgba(255, 255, 255, 0.16);
   border: 1px solid rgba(255, 255, 255, 0.14);
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  transform-style: preserve-3d;
+}
+
+body.dark-theme .medical-id-card.front .card-face-inner {
+  background: linear-gradient(135deg, #0E1726 0%, #060B13 100%);
+  color: #FFFFFF;
+}
+
+body.dark-theme .medical-id-card.back .card-face-inner {
+  background: linear-gradient(135deg, #171822 0%, #0A0B10 100%);
+  color: #FFFFFF;
 }
 
 .holo-glare {
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, transparent 60%);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.25) 0%, transparent 60%);
   pointer-events: none;
-}
-
-.medical-id-card.front {
-  background: linear-gradient(135deg, #0e1726 0%, #060b13 100%);
-  color: #ffffff;
-}
-
-.medical-id-card.back {
-  background: linear-gradient(135deg, #171822 0%, #0a0b10 100%);
-  color: #ffffff;
 }
 
 .card-top-bar {
@@ -1982,4 +2010,105 @@ body.light-theme .spotlight-card::before {
   .highlight-contact, .alert-text {
     color: #000000 !important;
   }
+}
+
+
+/* --------------------------------------------------------------------------
+   PAIRWISE INTERACTION COLLISION MATRIX
+   -------------------------------------------------------------------------- */
+.matrix-section-card {
+  padding: 24px;
+}
+
+.matrix-overflow-wrap {
+  width: 100%;
+  overflow-x: auto;
+  margin-top: 16px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--glass-border);
+}
+
+.matrix-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 500px;
+  font-size: 0.84rem;
+}
+
+.matrix-th {
+  background: var(--bg-surface-elevated, #F1F6F5);
+  padding: 12px 14px;
+  text-align: left;
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--glass-border);
+  border-right: 1px solid var(--glass-border);
+  white-space: nowrap;
+}
+
+body.dark-theme .matrix-th {
+  background: rgba(4, 9, 11, 0.6);
+}
+
+.matrix-td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--glass-border);
+  border-right: 1px solid var(--glass-border);
+  text-align: center;
+  transition: background var(--transition-fast);
+}
+
+.matrix-cell-clean {
+  background: rgba(5, 150, 105, 0.08);
+  color: var(--accent-primary);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.matrix-cell-critical {
+  background: var(--severity-critical-bg);
+  color: var(--severity-critical);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.matrix-cell-critical:hover {
+  filter: brightness(0.95);
+}
+
+.matrix-cell-major {
+  background: var(--severity-major-bg);
+  color: var(--severity-major);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.matrix-cell-major:hover {
+  filter: brightness(0.95);
+}
+
+.matrix-cell-moderate {
+  background: var(--severity-moderate-bg);
+  color: var(--severity-moderate);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.matrix-cell-self {
+  background: var(--bg-surface-elevated, #F1F6F5);
+  color: var(--text-faint);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+}
+
+body.dark-theme .matrix-cell-self {
+  background: rgba(4, 9, 11, 0.4);
 }

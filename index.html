@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="MedGuard - Open-source personal health safety companion. Check drug interactions, demystify lab results, and generate emergency medical cards with 100% offline privacy.">
-  <meta name="theme-color" content="#020607">
+  <meta name="theme-color" content="#F8FAF9">
   <title>MedGuard • Clinical Safety & Emergency Companion</title>
 
   <!-- Typography: Plus Jakarta Sans, Space Grotesk, Inter -->
@@ -14,7 +14,7 @@
 
   <link rel="stylesheet" href="style.css">
 </head>
-<body class="dark-theme">
+<body class="light-theme">
   <!-- Interactive Biochemical Mesh Canvas -->
   <canvas id="meshCanvas" class="background-canvas"></canvas>
 
@@ -174,6 +174,18 @@
             </div>
           </div>
         </div>
+
+        <!-- Pairwise Interaction Collision Matrix -->
+        <div class="matrix-section-card glass-card spotlight-card" id="pairwiseMatrixCard" style="display: none; margin-top: 24px;">
+          <div class="card-header">
+            <div>
+              <h2 class="card-title">Pairwise Interaction Collision Matrix</h2>
+              <p class="card-hint">Simultaneous cross-analysis of all multi-drug combinations across your current regimen.</p>
+            </div>
+            <span class="preview-format-tag" id="matrixCountTag">N x N Matrix</span>
+          </div>
+          <div class="matrix-overflow-wrap" id="pairwiseMatrixContainer"></div>
+        </div>
       </section>
 
       <!-- 2. LAB REPORT EXPLAINER VIEW -->
@@ -248,22 +260,22 @@
                   </div>
                 </div>
 
-                <!-- Visual Range Gauge -->
+                <!-- Visual Range Gauge with Dynamic Reference Intervals -->
                 <div class="range-meter-container">
                   <div class="range-status-bar" id="rangeStatusBar">
-                    <div class="range-segment seg-low" title="Low range">Low</div>
-                    <div class="range-segment seg-normal" title="Normal / Optimal range">Optimal</div>
-                    <div class="range-segment seg-high" title="Elevated range">High</div>
+                    <div class="range-segment seg-low" id="segLowBar" title="Low range">Low</div>
+                    <div class="range-segment seg-normal" id="segNormalBar" title="Normal / Optimal range">Optimal Adult Bracket</div>
+                    <div class="range-segment seg-high" id="segHighBar" title="Elevated range">High</div>
                     <div id="userValuePointer" class="value-pointer hidden" style="left: 50%;">
                       <div class="pointer-pin"></div>
                       <div class="pointer-bubble" id="pointerValueLabel">0</div>
                     </div>
                   </div>
-                  <div class="range-ticks-row">
-                    <span id="tickMin">0</span>
-                    <span id="tickNormalMin">13.8</span>
-                    <span id="tickNormalMax">17.2</span>
-                    <span id="tickMax">22</span>
+                  <div class="range-ticks-row" id="rangeTicksRow">
+                    <span id="tickMin" class="range-tick tick-min">0</span>
+                    <span id="tickNormalMin" class="range-tick tick-norm-min">13.8</span>
+                    <span id="tickNormalMax" class="range-tick tick-norm-max">17.2</span>
+                    <span id="tickMax" class="range-tick tick-max">22</span>
                   </div>
                 </div>
 
@@ -388,92 +400,96 @@
             <div class="card-preview-stage" id="cardPreviewStage">
               <!-- Physical Printable Wallet Card (Front) -->
               <div class="medical-id-card front" id="cardFront">
-                <div class="holo-glare"></div>
-                <div class="card-top-bar">
-                  <div class="card-cross-mark">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                      <line x1="12" y1="5" x2="12" y2="19"></line>
-                      <line x1="5" y1="12" x2="19" y2="12"></line>
-                    </svg>
-                    <span>EMERGENCY MEDICAL CARD</span>
-                  </div>
-                  <div class="card-blood-badge" id="cardBloodDisplay">O+</div>
-                </div>
-
-                <div class="card-body">
-                  <div class="card-name-row">
-                    <div class="card-label">FULL NAME</div>
-                    <div class="card-value-lg" id="cardNameDisplay">Jane M. Doe</div>
-                  </div>
-
-                  <div class="card-grid-2col">
-                    <div>
-                      <div class="card-label">DATE OF BIRTH</div>
-                      <div class="card-value" id="cardDobDisplay">1990-05-15</div>
+                <div class="card-face-inner">
+                  <div class="holo-glare"></div>
+                  <div class="card-top-bar">
+                    <div class="card-cross-mark">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                      </svg>
+                      <span>EMERGENCY MEDICAL CARD</span>
                     </div>
-                    <div>
-                      <div class="card-label">ORGAN DONOR</div>
-                      <div class="card-value" id="cardDonorDisplay">Yes</div>
+                    <div class="card-blood-badge" id="cardBloodDisplay">O+</div>
+                  </div>
+
+                  <div class="card-body">
+                    <div class="card-name-row">
+                      <div class="card-label">FULL NAME</div>
+                      <div class="card-value-lg" id="cardNameDisplay">Jane M. Doe</div>
+                    </div>
+
+                    <div class="card-grid-2col">
+                      <div>
+                        <div class="card-label">DATE OF BIRTH</div>
+                        <div class="card-value" id="cardDobDisplay">1990-05-15</div>
+                      </div>
+                      <div>
+                        <div class="card-label">ORGAN DONOR</div>
+                        <div class="card-value" id="cardDonorDisplay">Yes</div>
+                      </div>
+                    </div>
+
+                    <div class="card-section">
+                      <div class="card-label">PRIMARY EMERGENCY CONTACT</div>
+                      <div class="card-value highlight-contact" id="cardPrimaryDisplay">John Doe (Spouse) - +1 (555) 234-5678</div>
+                    </div>
+
+                    <div class="card-section" id="cardSecondaryWrap">
+                      <div class="card-label">SECONDARY CONTACT</div>
+                      <div class="card-value" id="cardSecondaryDisplay">Dr. Sarah Chen - +1 (555) 987-6543</div>
                     </div>
                   </div>
 
-                  <div class="card-section">
-                    <div class="card-label">PRIMARY EMERGENCY CONTACT</div>
-                    <div class="card-value highlight-contact" id="cardPrimaryDisplay">John Doe (Spouse) - +1 (555) 234-5678</div>
+                  <div class="card-bottom-bar">
+                    <span>MEDGUARD SECURE ICE PROTOCOL</span>
+                    <span>SEE REVERSE FOR ALLERGIES</span>
                   </div>
-
-                  <div class="card-section" id="cardSecondaryWrap">
-                    <div class="card-label">SECONDARY CONTACT</div>
-                    <div class="card-value" id="cardSecondaryDisplay">Dr. Sarah Chen - +1 (555) 987-6543</div>
-                  </div>
-                </div>
-
-                <div class="card-bottom-bar">
-                  <span>MEDGUARD SECURE ICE PROTOCOL</span>
-                  <span>SEE REVERSE FOR ALLERGIES</span>
                 </div>
               </div>
 
               <!-- Physical Printable Wallet Card (Back) -->
               <div class="medical-id-card back" id="cardBack">
-                <div class="holo-glare"></div>
-                <div class="card-top-bar alert-bar">
-                  <div class="card-cross-mark">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                      <polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon>
-                      <line x1="12" y1="8" x2="12" y2="12"></line>
-                      <line x1="12" y1="16" x2="12.01" y2="16"></line>
-                    </svg>
-                    <span>CRITICAL CLINICAL DATA</span>
-                  </div>
-                  <span class="card-id-tag">CARD REVERSE</span>
-                </div>
-
-                <div class="card-body">
-                  <div class="card-section">
-                    <div class="card-label alert-label">CRITICAL ALLERGIES</div>
-                    <div class="card-value alert-text" id="cardAllergiesDisplay">Penicillin, Peanuts, Sulfa Drugs</div>
+                <div class="card-face-inner">
+                  <div class="holo-glare"></div>
+                  <div class="card-top-bar alert-bar">
+                    <div class="card-cross-mark">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon>
+                        <line x1="12" y1="8" x2="12" y2="12"></line>
+                        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                      </svg>
+                      <span>CRITICAL CLINICAL DATA</span>
+                    </div>
+                    <span class="card-id-tag">CARD REVERSE</span>
                   </div>
 
-                  <div class="card-section">
-                    <div class="card-label">CHRONIC MEDICAL CONDITIONS</div>
-                    <div class="card-value" id="cardConditionsDisplay">Type 1 Diabetes, Asthma, Hypertension</div>
+                  <div class="card-body">
+                    <div class="card-section">
+                      <div class="card-label alert-label">CRITICAL ALLERGIES</div>
+                      <div class="card-value alert-text" id="cardAllergiesDisplay">Penicillin, Peanuts, Sulfa Drugs</div>
+                    </div>
+
+                    <div class="card-section">
+                      <div class="card-label">CHRONIC MEDICAL CONDITIONS</div>
+                      <div class="card-value" id="cardConditionsDisplay">Type 1 Diabetes, Asthma, Hypertension</div>
+                    </div>
+
+                    <div class="card-section">
+                      <div class="card-label">ACTIVE DAILY MEDICATIONS</div>
+                      <div class="card-value" id="cardMedicationsDisplay">Insulin Glargine 20u qHS, Lisinopril 10mg</div>
+                    </div>
+
+                    <div class="card-section">
+                      <div class="card-label">MEDICAL IMPLANTS / NOTES</div>
+                      <div class="card-value" id="cardNotesDisplay">Cardiac Pacemaker (2023), Organ Donor</div>
+                    </div>
                   </div>
 
-                  <div class="card-section">
-                    <div class="card-label">ACTIVE DAILY MEDICATIONS</div>
-                    <div class="card-value" id="cardMedicationsDisplay">Insulin Glargine 20u qHS, Lisinopril 10mg</div>
+                  <div class="card-bottom-bar">
+                    <span>ZERO CLOUD TELEMETRY</span>
+                    <span>LOCAL-FIRST ENCRYPTION</span>
                   </div>
-
-                  <div class="card-section">
-                    <div class="card-label">MEDICAL IMPLANTS / NOTES</div>
-                    <div class="card-value" id="cardNotesDisplay">Cardiac Pacemaker (2023), Organ Donor</div>
-                  </div>
-                </div>
-
-                <div class="card-bottom-bar">
-                  <span>ZERO CLOUD TELEMETRY</span>
-                  <span>LOCAL-FIRST ENCRYPTION</span>
                 </div>
               </div>
             </div>
