@@ -320,6 +320,21 @@ body.light-theme .grid-backdrop {
   letter-spacing: 0.01em;
 }
 
+body.light-theme .brand-emblem {
+  background: #0066CC !important;
+  border-color: #0052A3 !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 4px 14px rgba(0, 102, 204, 0.25) !important;
+}
+
+body.light-theme .brand-title {
+  color: #0F172A !important;
+}
+
+body.light-theme .brand-subtitle {
+  color: #475569 !important;
+}
+
 /* Header Nav Links */
 .header-nav-links {
   display: flex;
@@ -1972,71 +1987,365 @@ body.dark-theme .medical-id-card.back .card-face-inner {
   to { transform: translateY(0); opacity: 1; }
 }
 
+/* Screen hidden for print-only cutout sheet elements */
+.print-cutout-sheet-header,
+.print-cutout-sheet-footer {
+  display: none;
+}
+
 /* ==========================================================================
    Print Stylesheet for Physical Wallet Card Cutout Sheet
+   ISO/IEC 7810 ID-1 Standard Format (85.60 mm x 53.98 mm)
    ========================================================================== */
 @media print {
-  body {
-    background: #ffffff !important;
-    color: #000000 !important;
+  @page {
+    size: portrait;
+    margin: 10mm 12mm;
   }
-  .app-header, .hero-section, .landing-section, .suite-divider-block,
-  .app-footer, .ambient-glow, .export-actions-cluster, .card-hint-text, .toast {
+
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  html, body, body.dark-theme, body.light-theme {
+    background: #FFFFFF !important;
+    color: #000000 !important;
+    font-family: var(--font-body) !important;
+    font-size: 11pt !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+    height: auto !important;
+  }
+
+  /* Completely suppress all web chrome, navigation, headers, forms, and background artifacts */
+  .app-header,
+  .nav-segment-bar,
+  .panel-header-block,
+  .hero-section,
+  .landing-section,
+  .suite-divider-block,
+  .app-footer,
+  .ambient-glow,
+  .background-canvas,
+  .grid-backdrop,
+  .toast,
+  #view-drugs,
+  #view-labs,
+  .layout-grid-2col > .glass-card:first-child,
+  .card-header,
+  .card-hint-text,
+  .export-actions-cluster,
+  .holo-glare {
     display: none !important;
   }
+
   .app-viewport {
     max-width: 100% !important;
     padding: 0 !important;
     margin: 0 !important;
   }
+
   .content-panel {
-    display: block !important;
-  }
-  #view-drugs, #view-labs {
     display: none !important;
   }
+
   #view-emergency {
     display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
   }
+
   .layout-grid-2col {
     display: block !important;
+    margin: 0 !important;
+    padding: 0 !important;
   }
-  .glass-card {
+
+  .layout-grid-2col > .glass-card:last-child {
+    display: block !important;
     background: none !important;
     border: none !important;
     box-shadow: none !important;
     padding: 0 !important;
+    margin: 0 auto !important;
+    width: 100% !important;
   }
-  .card-header {
-    display: none !important;
+
+  /* Physical Card Cutout Sheet Header */
+  .print-cutout-sheet-header {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    gap: 1.5mm !important;
+    margin-top: 4mm !important;
+    margin-bottom: 4mm !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
   }
+
+  .print-sheet-title {
+    font-family: var(--font-display) !important;
+    font-size: 11pt !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.04em !important;
+    color: #000000 !important;
+    line-height: 1.2 !important;
+  }
+
+  .print-sheet-format {
+    font-family: var(--font-mono) !important;
+    font-size: 7.5pt !important;
+    font-weight: 600 !important;
+    color: #475569 !important;
+    letter-spacing: 0.02em !important;
+  }
+
+  .cut-guide-bar {
+    display: flex !important;
+    justify-content: space-between !important;
+    width: 171.20mm !important;
+    font-family: var(--font-mono) !important;
+    font-size: 6.2pt !important;
+    font-weight: 700 !important;
+    color: #64748B !important;
+    padding: 1mm 2mm !important;
+    margin-top: 2mm !important;
+    border-bottom: 1px dotted #94A3B8 !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Center Stage: Two Physical Cards Joined Along Center Fold Line */
   .card-preview-stage {
     display: flex !important;
     flex-direction: row !important;
-    gap: 12px !important;
     justify-content: center !important;
-    margin-top: 40px !important;
+    align-items: stretch !important;
+    gap: 0 !important;
+    margin: 4mm auto !important;
+    width: 171.20mm !important;
+    max-width: 100% !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
   }
+
   .medical-id-card {
-    border: 2px dashed #999999 !important;
+    width: 85.60mm !important;
+    height: 53.98mm !important;
+    max-width: 85.60mm !important;
+    max-height: 53.98mm !important;
+    aspect-ratio: auto !important;
+    position: relative !important;
+    transform: none !important;
+    cursor: default !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Front Face: outer dashed cut border on top, left, bottom; inner dashed fold line on right */
+  .medical-id-card.front {
+    border: 1.5px dashed #000000 !important;
+    border-right: 1.5px dashed #64748B !important;
+    border-top-left-radius: 3.5mm !important;
+    border-bottom-left-radius: 3.5mm !important;
+    border-top-right-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+  }
+
+  /* Back Face: joined seamlessly at center fold, outer dashed cut border on top, right, bottom */
+  .medical-id-card.back {
+    border: 1.5px dashed #000000 !important;
+    border-left: none !important;
+    border-top-right-radius: 3.5mm !important;
+    border-bottom-right-radius: 3.5mm !important;
+    border-top-left-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+  }
+
+  /* Clean Paper Canvas for Ink Protection */
+  .card-face-inner,
+  .medical-id-card.front .card-face-inner,
+  .medical-id-card.back .card-face-inner,
+  body.dark-theme .medical-id-card.front .card-face-inner,
+  body.dark-theme .medical-id-card.back .card-face-inner,
+  body.light-theme .medical-id-card.front .card-face-inner,
+  body.light-theme .medical-id-card.back .card-face-inner {
+    width: 100% !important;
+    height: 100% !important;
+    background: #FFFFFF !important;
+    color: #000000 !important;
     box-shadow: none !important;
-    color: #000000 !important;
-    background: #ffffff !important;
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
+    border: none !important;
+    border-radius: 0 !important;
+    padding: 3mm 4mm !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
   }
+
   .card-top-bar {
-    border-bottom: 2px solid #000000 !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    border-bottom: 1.2px solid #000000 !important;
+    padding-bottom: 1mm !important;
+    margin-bottom: 1mm !important;
   }
+
+  .card-top-bar.alert-bar {
+    border-bottom: 1.2px solid #DC2626 !important;
+  }
+
   .card-cross-mark {
-    color: #000000 !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 1.2mm !important;
+    font-family: var(--font-display) !important;
+    font-size: 6.5pt !important;
+    font-weight: 800 !important;
+    color: #DC2626 !important;
+    letter-spacing: 0.04em !important;
   }
+
+  .card-cross-mark svg {
+    width: 3.2mm !important;
+    height: 3.2mm !important;
+    stroke: #DC2626 !important;
+  }
+
   .card-blood-badge {
-    background: #000000 !important;
-    color: #ffffff !important;
+    background: #DC2626 !important;
+    color: #FFFFFF !important;
+    font-family: var(--font-display) !important;
+    font-size: 7.2pt !important;
+    font-weight: 800 !important;
+    padding: 0.4mm 1.8mm !important;
+    border-radius: 0.8mm !important;
+    line-height: 1 !important;
   }
-  .highlight-contact, .alert-text {
+
+  .card-id-tag {
+    font-family: var(--font-mono) !important;
+    font-size: 6pt !important;
+    font-weight: 800 !important;
+    color: #DC2626 !important;
+    letter-spacing: 0.05em !important;
+  }
+
+  .card-body {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0.8mm !important;
+    flex: 1 !important;
+    justify-content: flex-start !important;
+  }
+
+  .card-name-row {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0.3mm !important;
+  }
+
+  .card-label {
+    font-family: var(--font-mono) !important;
+    font-size: 4.8pt !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.06em !important;
+    color: #475569 !important;
+    line-height: 1 !important;
+  }
+
+  .alert-label {
+    color: #DC2626 !important;
+  }
+
+  .card-value-lg {
+    font-family: var(--font-display) !important;
+    font-size: 8.5pt !important;
+    font-weight: 800 !important;
     color: #000000 !important;
+    line-height: 1.1 !important;
+  }
+
+  .card-grid-2col {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 1.5mm !important;
+  }
+
+  .card-section {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0.3mm !important;
+  }
+
+  .card-value {
+    font-size: 6pt !important;
+    font-weight: 600 !important;
+    color: #000000 !important;
+    line-height: 1.15 !important;
+  }
+
+  .highlight-contact {
+    color: #000000 !important;
+    font-weight: 700 !important;
+  }
+
+  .alert-text {
+    color: #B91C1C !important;
+    font-weight: 800 !important;
+  }
+
+  .card-bottom-bar {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    border-top: 0.8px solid #CBD5E1 !important;
+    padding-top: 0.8mm !important;
+    margin-top: 0.8mm !important;
+    font-family: var(--font-mono) !important;
+    font-size: 4.6pt !important;
+    font-weight: 700 !important;
+    color: #64748B !important;
+    letter-spacing: 0.04em !important;
+  }
+
+  /* Physical Cutout Sheet Footer Instructions */
+  .print-cutout-sheet-footer {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    width: 171.20mm !important;
+    margin: 5mm auto 0 auto !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+    box-sizing: border-box !important;
+  }
+
+  .print-sheet-instructions {
+    font-size: 7.2pt !important;
+    color: #475569 !important;
+    line-height: 1.35 !important;
+    border: 1px solid #CBD5E1 !important;
+    background: #F8FAFC !important;
+    padding: 3mm 4mm !important;
+    border-radius: 2mm !important;
+    text-align: left !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
   }
 }
 
