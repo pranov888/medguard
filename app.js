@@ -695,17 +695,23 @@
   // 6. Theme Engine
   // ---------------------------------------------------------------------------
   function initTheme() {
-    const savedTheme = localStorage.getItem('medguard_theme');
-    if (savedTheme) {
-      setTheme(savedTheme);
+    // Application defaults to dark mode on launch
+    const sessionTheme = sessionStorage.getItem('medguard_theme');
+    if (sessionTheme === 'light') {
+      setTheme('light');
     } else {
-      const initial = document.body.classList.contains('light-theme') ? 'light' : 'dark';
-      setTheme(initial);
+      setTheme('dark');
     }
+
+    try {
+      localStorage.removeItem('medguard_theme');
+    } catch (e) {}
 
     dom.themeToggleBtn.addEventListener('click', () => {
       const isDark = document.body.classList.contains('dark-theme');
-      setTheme(isDark ? 'light' : 'dark');
+      const nextTheme = isDark ? 'light' : 'dark';
+      setTheme(nextTheme);
+      sessionStorage.setItem('medguard_theme', nextTheme);
     });
   }
 
@@ -717,7 +723,6 @@
       document.body.classList.remove('light-theme');
       document.body.classList.add('dark-theme');
     }
-    localStorage.setItem('medguard_theme', theme);
   }
 
   // ---------------------------------------------------------------------------

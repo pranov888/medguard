@@ -1790,15 +1790,61 @@ body.light-theme .med-chip {
   transition: box-shadow var(--transition-smooth);
 }
 
-.medical-id-card.front .card-face-inner {
+/* Light theme card faces (both front and back are pristine clinical white) */
+.medical-id-card.front .card-face-inner,
+.medical-id-card.back .card-face-inner {
   background: #FFFFFF;
   color: #0D1B2A;
+  border: 1px solid rgba(13, 27, 42, 0.12);
 }
 
-.medical-id-card.back .card-face-inner {
-  background: #0D1B2A;
-  color: #FFFFFF;
-  border-color: rgba(255, 255, 255, 0.15);
+body.light-theme .medical-id-card.front .card-face-inner,
+body.light-theme .medical-id-card.back .card-face-inner {
+  background: #FFFFFF !important;
+  color: #0D1B2A !important;
+  border-color: rgba(13, 27, 42, 0.12) !important;
+  box-shadow: 0 16px 36px -6px rgba(13, 27, 42, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+}
+
+body.light-theme .card-top-bar {
+  border-bottom-color: rgba(13, 27, 42, 0.12) !important;
+}
+
+body.light-theme .card-top-bar.alert-bar {
+  border-bottom-color: #DC2626 !important;
+}
+
+body.light-theme .card-cross-mark {
+  color: #DC2626 !important;
+}
+
+body.light-theme .card-id-tag {
+  color: #64748B !important;
+}
+
+body.light-theme .card-label {
+  color: #64748B !important;
+}
+
+body.light-theme .card-label.alert-label {
+  color: #DC2626 !important;
+}
+
+body.light-theme .card-value {
+  color: #0D1B2A !important;
+}
+
+body.light-theme .alert-text {
+  color: #DC2626 !important;
+}
+
+body.light-theme .highlight-contact {
+  color: #0066CC !important;
+}
+
+body.light-theme .card-bottom-bar {
+  border-top-color: rgba(13, 27, 42, 0.12) !important;
+  color: #64748B !important;
 }
 
 body.dark-theme .card-face-inner {
