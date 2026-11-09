@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="style.css?v=2.2">
+  <link rel="stylesheet" href="style.css?v=2.3">
 </head>
 <body class="dark-theme">
   <!-- Interactive Biochemical Mesh Canvas -->
@@ -324,6 +324,17 @@
           </div>
         </div>
 
+        <!-- Print-only Cutout Sheet Header & Guidelines -->
+        <div class="print-cutout-sheet-header">
+          <div class="print-sheet-title">MEDGUARD EMERGENCY MEDICAL IDENTIFICATION CARD (ICE)</div>
+          <div class="print-sheet-format">ISO/IEC 7810 ID-1 Standard Format (85.60 mm x 53.98 mm) • Physical Wallet Card Cutout</div>
+          <div class="cut-guide-bar">
+            <span>[CUT ALONG DASHED OUTER BORDER]</span>
+            <span>[CENTER FOLD LINE]</span>
+            <span>[CUT ALONG DASHED OUTER BORDER]</span>
+          </div>
+        </div>
+
         <div class="layout-grid-2col">
           <!-- Left Column: ICE Form -->
           <div class="glass-card spotlight-card">
@@ -500,6 +511,13 @@
             </div>
           </div>
         </div>
+
+        <!-- Print-only Cutout Sheet Footer & First Responder Instructions -->
+        <div class="print-cutout-sheet-footer">
+          <div class="print-sheet-instructions">
+            <strong>Notice for First Responders &amp; Emergency Personnel:</strong> This card contains vital clinical data (blood type, critical allergies, medical conditions, and daily medications) generated securely and offline by MedGuard Open Source Health Protocol. Keep this card behind your driver license or in your primary wallet card sleeve.
+          </div>
+        </div>
       </section>
     </main>
 
@@ -522,6 +540,6 @@
   <div id="toastMessage" class="toast hidden"></div>
 
   <!-- Application Logic -->
-  <script src="app.js?v=2.2"></script>
+  <script src="app.js?v=2.3"></script>
 </body>
 </html>
