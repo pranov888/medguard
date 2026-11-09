@@ -695,8 +695,13 @@
   // 6. Theme Engine
   // ---------------------------------------------------------------------------
   function initTheme() {
-    const savedTheme = localStorage.getItem('medguard_theme') || 'dark';
-    setTheme(savedTheme);
+    const savedTheme = localStorage.getItem('medguard_theme');
+    if (savedTheme) {
+      setTheme(savedTheme);
+    } else {
+      const initial = document.body.classList.contains('light-theme') ? 'light' : 'dark';
+      setTheme(initial);
+    }
 
     dom.themeToggleBtn.addEventListener('click', () => {
       const isDark = document.body.classList.contains('dark-theme');

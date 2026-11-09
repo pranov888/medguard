@@ -253,37 +253,40 @@ body.light-theme .grid-backdrop {
 .brand-cluster {
   display: flex;
   align-items: center;
+  gap: 14px;
 }
 
 .brand-link {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
   text-decoration: none;
   color: inherit;
 }
 
 .brand-emblem {
   position: relative;
-  width: 38px;
-  height: 38px;
+  width: 40px;
+  height: 40px;
   border-radius: var(--radius-sm);
   background: #18181B;
   border: 1px solid rgba(255, 255, 255, 0.15);
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
   color: var(--accent-primary);
   box-shadow: 0 4px 14px var(--accent-primary-glow);
 }
 
 .emblem-radar-pulse {
   position: absolute;
-  inset: -3px;
-  border-radius: 12px;
+  inset: -2px;
+  border-radius: var(--radius-sm);
   border: 1px solid var(--accent-primary);
   opacity: 0;
   animation: radarPulse 2.8s infinite;
+  pointer-events: none;
 }
 
 @keyframes radarPulse {
@@ -292,17 +295,29 @@ body.light-theme .grid-backdrop {
   100% { transform: scale(1.4); opacity: 0; }
 }
 
+.brand-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2px;
+}
+
 .brand-title {
+  font-family: var(--font-display);
   font-size: 1.25rem;
-  font-weight: 700;
+  font-weight: 800;
   letter-spacing: -0.025em;
   color: var(--text-main);
-  line-height: 1.2;
+  line-height: 1.15;
 }
 
 .brand-subtitle {
-  font-size: 0.78rem;
+  font-family: var(--font-body);
+  font-size: 0.76rem;
+  font-weight: 500;
   color: var(--text-muted);
+  line-height: 1.2;
+  letter-spacing: 0.01em;
 }
 
 /* Header Nav Links */
